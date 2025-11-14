@@ -1434,6 +1434,7 @@ let selectedWithdrawMethod = 'bkash';
 let coinRate = 1;
 let minWithdrawAmount = 100;
 let dailyData = {};
+let taskTimer = 10;
 
 let rewardSettings = {
   dailyLogin: 50,
@@ -1452,6 +1453,14 @@ function generateUserID() {
   const timestamp = Date.now().toString().slice(-6);
   const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
   return 'TM' + timestamp + random;
+}
+
+// Load Task Timer from Admin Settings
+function loadTaskTimer(){
+  db.ref('settings/taskTimer').on('value', snap => {
+    taskTimer = snap.val() || 10;
+    console.log('⏱️ Task timer loaded:', taskTimer, 'seconds');
+  });
 }
 
 // Load Reward Settings
@@ -1599,7 +1608,7 @@ function markAsRead(key){
   db.ref('notifications/' + uid + '/' + key).update({read: true});
 }
 
-// Load Leaderboard - COMPLETE FIXED VERSION
+// Load Leaderboard
 function loadLeaderboard(){
   const container = document.getElementById('leaderboard-list');
   
@@ -2165,6 +2174,7 @@ function showDashboard(){
   loadWithdrawNotice();
   loadCoinRate();
   loadRewardSettings();
+  loadTaskTimer();
   loadDailyTasks();
   loadNotifications();
   console.log('✅ Dashboard loaded');
@@ -2274,7 +2284,7 @@ function loadWithdrawNotice(){
   });
 }
 
-// TASKS
+// TASKS - WITH DYNAMIC TIMER
 function loadTasks(){
   db.ref('tasks').once('value').then(snapshot=>{
     const tasks = snapshot.val();
@@ -2313,11 +2323,39 @@ function openTask(link, taskId){
     window.open(link, '_blank');
     
     const actionDiv = document.getElementById('task-action-' + taskId);
-    if(actionDiv){
-      actionDiv.innerHTML = `<button class="complete-btn" onclick="completeTask('${taskId}')">Complete</button>`;
-    }
+    if(!actionDiv) return;
+    
+    let countdown = taskTimer; // Use admin-set timer
+    
+    // Show timer button
+    actionDiv.innerHTML = `
+      <button class="complete-btn" disabled style="background:#555;opacity:0.7;cursor:not-allowed;">
+        Wait ${countdown}s
+      </button>
+    `;
+    
+    // Start countdown
+    const timer = setInterval(() => {
+      countdown--;
+      
+      const timerBtn = actionDiv.querySelector('button');
+      if(timerBtn){
+        if(countdown > 0){
+          timerBtn.innerText = `Wait ${countdown}s`;
+        } else {
+          clearInterval(timer);
+          // Enable complete button after timer
+          actionDiv.innerHTML = `
+            <button class="complete-btn" onclick="completeTask('${taskId}')">
+              Complete
+            </button>
+          `;
+        }
+      }
+    }, 1000);
+    
   } else {
-    alert('Task link not found');
+    alert('⚠️ Task link not found');
   }
 }
 
@@ -2344,22 +2382,38 @@ function completeTask(taskId){
         taskName: task.name
       };
       
+      // Referral Commission System
       if(userData.referredBy){
         db.ref('users').orderByChild('userID').equalTo(userData.referredBy).once('value').then(snapshot => {
           snapshot.forEach(childSnapshot => {
             const referrerUid = childSnapshot.key;
             const referrerData = childSnapshot.val();
             
-            const commission = Math.floor(reward * (rewardSettings.taskCommissionRate / 100));
-            const newReferrerBalance = (referrerData.balance || 0) + commission;
-            const newReferrerTotalEarned = (referrerData.totalEarned || 0) + commission;
-            const newReferralEarnings = (referrerData.referralEarnings || 0) + commission;
+            const commissionRate = rewardSettings.taskCommissionRate || 10;
+            const commission = Math.floor(reward * (commissionRate / 100));
             
-            db.ref('users/' + referrerUid).update({
-              balance: newReferrerBalance,
-              totalEarned: newReferrerTotalEarned,
-              referralEarnings: newReferralEarnings
-            });
+            if(commission > 0){
+              const newReferrerBalance = (referrerData.balance || 0) + commission;
+              const newReferrerTotalEarned = (referrerData.totalEarned || 0) + commission;
+              const newReferralEarnings = (referrerData.referralEarnings || 0) + commission;
+              
+              db.ref('users/' + referrerUid).update({
+                balance: newReferrerBalance,
+                totalEarned: newReferrerTotalEarned,
+                referralEarnings: newReferralEarnings
+              });
+              
+              db.ref('notifications/' + referrerUid).push({
+                title: '💰 Referral Commission Earned!',
+                message: `You earned ${commission} coins (${commissionRate}% commission) from ${userData.name}'s task completion!`,
+                type: 'commission',
+                timestamp: Date.now(),
+                date: new Date().toLocaleString(),
+                read: false
+              });
+              
+              console.log(`✅ Referral commission: ${commission} coins (${commissionRate}%) sent to referrer`);
+            }
           });
         });
       }
@@ -2382,7 +2436,7 @@ function completeTask(taskId){
   });
 }
 
-// WITHDRAW - FIXED VERSION
+// WITHDRAW
 function loadWithdrawPage(){
   document.getElementById('withdraw-balance').innerText = userBalance;
   document.getElementById('converter-coins').value = '';
