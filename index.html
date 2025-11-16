@@ -1304,7 +1304,6 @@ body{
       </div>
     </div>
     
-    <!-- শুধুমাত্র Nagad এবং Rocket -->
     <div class="withdraw-methods">
       <div class="method-btn active" onclick="selectMethod('nagad')">📱 Nagad</div>
       <div class="method-btn" onclick="selectMethod('rocket')">🚀 Rocket</div>
@@ -1626,34 +1625,51 @@ let rewardSettings = {
   taskCommissionRate: 10
 };
 
-console.log('🚀 Take Master User Panel with Anti-Fraud System Initialized');
+console.log('🚀 Take Master User Panel with Fast Anti-Fraud System');
 
-// DEVICE FINGERPRINTING & IP DETECTION
+// DEVICE FINGERPRINTING & IP DETECTION - দ্রুত এবং কার্যকর
 async function getDeviceFingerprint(){
   try {
     const fpPromise = FingerprintJS.load();
-    const fp = await fpPromise;
+    
+    // 2 সেকেন্ড টাইমআউট
+    const fp = await Promise.race([
+      fpPromise,
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Fingerprint timeout')), 2000)
+      )
+    ]);
+    
     const result = await fp.get();
     deviceFingerprint = result.visitorId;
     console.log('🔒 Device Fingerprint:', deviceFingerprint);
     return deviceFingerprint;
   } catch(error) {
-    console.error('❌ Fingerprint error:', error);
-    deviceFingerprint = 'FP_' + Date.now() + '_' + Math.random().toString(36).substring(7);
+    console.warn('⚠️ Fingerprint detection failed, using fallback:', error.message);
+    // Fallback ID তৈরি করুন
+    deviceFingerprint = 'FP_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
     return deviceFingerprint;
   }
 }
 
 async function getUserIP(){
   try {
-    const response = await fetch('https://api.ipify.org?format=json');
+    // 2 সেকেন্ড টাইমআউট
+    const response = await Promise.race([
+      fetch('https://api.ipify.org?format=json'),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('IP timeout')), 2000)
+      )
+    ]);
+    
     const data = await response.json();
     userIP = data.ip;
     console.log('🌐 User IP:', userIP);
     return userIP;
   } catch(error) {
-    console.error('❌ IP detection error:', error);
-    userIP = 'Unknown';
+    console.warn('⚠️ IP detection failed, using fallback:', error.message);
+    // Fallback IP তৈরি করুন
+    userIP = 'IP_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
     return userIP;
   }
 }
@@ -1671,34 +1687,66 @@ function getDeviceInfo(){
 }
 
 async function initializeDeviceDetection(){
-  await getDeviceFingerprint();
-  await getUserIP();
-  console.log('✅ Device detection initialized');
+  try {
+    // দুটি একসাথে চালু করুন, সর্বোচ্চ 3 সেকেন্ড অপেক্ষা
+    await Promise.race([
+      Promise.all([
+        getDeviceFingerprint(),
+        getUserIP()
+      ]),
+      new Promise((resolve) => setTimeout(resolve, 3000))
+    ]);
+    
+    console.log('✅ Device detection completed');
+  } catch(error) {
+    console.warn('⚠️ Device detection incomplete:', error.message);
+  }
+  
+  // নিশ্চিত করুন যে values সেট আছে
+  if(!deviceFingerprint) {
+    deviceFingerprint = 'FP_' + Date.now() + '_' + Math.random().toString(36).substring(2, 15);
+  }
+  if(!userIP) {
+    userIP = 'IP_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+  }
 }
 
 async function checkDuplicateAccount(email){
-  if(!deviceFingerprint || !userIP) {
-    await initializeDeviceDetection();
-  }
-  
-  console.log('🔍 Checking for duplicate accounts...');
-  
-  return db.ref('users').once('value').then(snapshot => {
+  try {
+    console.log('🔍 Checking for duplicate accounts...');
+    
+    // 3 সেকেন্ড টাইমআউট
+    const snapshot = await Promise.race([
+      db.ref('users').once('value'),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Database timeout')), 3000)
+      )
+    ]);
+    
     let duplicateFound = false;
     let duplicateReason = '';
     
     snapshot.forEach(child => {
       const user = child.val();
       
+      // নিজের email skip করুন
       if(user.email === email) return;
       
-      if(user.deviceInfo && user.deviceInfo.deviceId === deviceFingerprint){
+      // শুধু valid device ID check করুন (fallback না)
+      if(user.deviceInfo && 
+         deviceFingerprint && 
+         !deviceFingerprint.startsWith('FP_') &&
+         user.deviceInfo.deviceId === deviceFingerprint){
         duplicateFound = true;
         duplicateReason = 'Same device detected';
         console.log('⚠️ Duplicate device found:', user.email);
       }
       
-      if(user.deviceInfo && user.deviceInfo.ip === userIP){
+      // শুধু valid IP check করুন (fallback না)
+      if(user.deviceInfo && 
+         userIP && 
+         !userIP.startsWith('IP_') &&
+         user.deviceInfo.ip === userIP){
         if(!duplicateFound){
           duplicateFound = true;
           duplicateReason = 'Same IP address detected';
@@ -1708,7 +1756,12 @@ async function checkDuplicateAccount(email){
     });
     
     return { duplicateFound, duplicateReason };
-  });
+    
+  } catch(error) {
+    console.warn('⚠️ Duplicate check failed:', error.message);
+    // Error হলে continue করতে দিন
+    return { duplicateFound: false, duplicateReason: '' };
+  }
 }
 
 function generateUserID() {
@@ -2253,6 +2306,7 @@ async function signup(){
   
   clearError('auth-error');
   
+  // Basic validation
   if(!name || !phone || !email || !password){ 
     showError('auth-error', 'Please fill all fields');
     return; 
@@ -2266,22 +2320,27 @@ async function signup(){
     return;
   }
   
-  showError('auth-error', '⏳ Checking device...');
-  
-  if(!deviceFingerprint || !userIP){
-    await initializeDeviceDetection();
-  }
-  
-  const duplicateCheck = await checkDuplicateAccount(email);
-  
-  if(duplicateCheck.duplicateFound){
-    showError('auth-error', `❌ Account creation blocked! ${duplicateCheck.duplicateReason}. Only one account per device is allowed.`);
-    return;
-  }
-  
-  showError('auth-error', '⏳ Creating account...');
-  
-  auth.createUserWithEmailAndPassword(email, password).then(cred=>{
+  try {
+    // Device checking দেখান (দ্রুত)
+    showError('auth-error', '⏳ Checking device...');
+    
+    // Device detection - maximum 3 seconds
+    if(!deviceFingerprint || !userIP){
+      await initializeDeviceDetection();
+    }
+    
+    // Duplicate check - maximum 3 seconds
+    const duplicateCheck = await checkDuplicateAccount(email);
+    
+    if(duplicateCheck.duplicateFound){
+      showError('auth-error', `❌ Account creation blocked! ${duplicateCheck.duplicateReason}. Only one account per device is allowed.`);
+      return;
+    }
+    
+    // Account তৈরি করুন
+    showError('auth-error', '⏳ Creating account...');
+    
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
     currentUser = cred.user;
     const uid = currentUser.uid;
     const userID = generateUserID();
@@ -2309,49 +2368,52 @@ async function signup(){
       isSuspicious: false
     };
     
-    return db.ref('users/'+uid).set(newUserData).then(() => {
-      if(referredBy){
-        db.ref('users').orderByChild('userID').equalTo(referredBy).once('value').then(snapshot => {
-          snapshot.forEach(childSnapshot => {
-            const referrerUid = childSnapshot.key;
-            const referrerData = childSnapshot.val();
-            
-            const newReferrals = referrerData.referrals || {};
-            newReferrals[uid] = {
-              name: name,
-              userID: userID,
-              joinedAt: Date.now()
-            };
-            
-            const referralBonus = rewardSettings.signupReferralBonus;
-            const newBalance = (referrerData.balance || 0) + referralBonus;
-            const newTotalEarned = (referrerData.totalEarned || 0) + referralBonus;
-            const newReferralEarnings = (referrerData.referralEarnings || 0) + referralBonus;
-            
-            db.ref('users/' + referrerUid).update({
-              referrals: newReferrals,
-              balance: newBalance,
-              totalEarned: newTotalEarned,
-              referralEarnings: newReferralEarnings
-            });
-            
-            db.ref('notifications/' + referrerUid).push({
-              title: '🎉 New Referral!',
-              message: `${name} joined using your referral link! You earned ${referralBonus} coins.`,
-              type: 'referral',
-              timestamp: Date.now(),
-              date: new Date().toLocaleString(),
-              read: false
-            });
+    await db.ref('users/'+uid).set(newUserData);
+    
+    // Referral bonus
+    if(referredBy){
+      db.ref('users').orderByChild('userID').equalTo(referredBy).once('value').then(snapshot => {
+        snapshot.forEach(childSnapshot => {
+          const referrerUid = childSnapshot.key;
+          const referrerData = childSnapshot.val();
+          
+          const newReferrals = referrerData.referrals || {};
+          newReferrals[uid] = {
+            name: name,
+            userID: userID,
+            joinedAt: Date.now()
+          };
+          
+          const referralBonus = rewardSettings.signupReferralBonus;
+          const newBalance = (referrerData.balance || 0) + referralBonus;
+          const newTotalEarned = (referrerData.totalEarned || 0) + referralBonus;
+          const newReferralEarnings = (referrerData.referralEarnings || 0) + referralBonus;
+          
+          db.ref('users/' + referrerUid).update({
+            referrals: newReferrals,
+            balance: newBalance,
+            totalEarned: newTotalEarned,
+            referralEarnings: newReferralEarnings
+          });
+          
+          db.ref('notifications/' + referrerUid).push({
+            title: '🎉 New Referral!',
+            message: `${name} joined using your referral link! You earned ${referralBonus} coins.`,
+            type: 'referral',
+            timestamp: Date.now(),
+            date: new Date().toLocaleString(),
+            read: false
           });
         });
-      }
-    });
-  }).then(()=>{
+      });
+    }
+    
     clearError('auth-error');
-  }).catch(err=>{
-    showError('auth-error', err.message);
-  });
+    
+  } catch(err) {
+    console.error('Signup error:', err);
+    showError('auth-error', err.message || 'Signup failed. Please try again.');
+  }
 }
 
 function login(){
@@ -2364,6 +2426,8 @@ function login(){
     showError('auth-error', 'Please enter email and password');
     return;
   }
+  
+  showError('auth-error', '⏳ Logging in...');
   
   auth.signInWithEmailAndPassword(email, password).then(cred=>{
     currentUser = cred.user;
@@ -2971,9 +3035,10 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+// Background এ device detection শুরু করুন
 initializeDeviceDetection();
 
-console.log('✅ All scripts loaded successfully with Anti-Fraud Protection');
+console.log('✅ All scripts loaded successfully with Fast Anti-Fraud Protection');
 </script>
 </body>
 </html>
