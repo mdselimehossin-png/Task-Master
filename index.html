@@ -246,7 +246,6 @@ body{
   margin-right:5px;
 }
 
-/* Daily Bonus Card */
 .daily-bonus-card{
   background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);
   border-radius:15px;
@@ -319,7 +318,6 @@ body{
   opacity:0.6;
 }
 
-/* Refer Card */
 .refer-card{
   background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);
   border-radius:15px;
@@ -522,7 +520,6 @@ body{
   transform:translateX(-3px);
 }
 
-/* Refer Section */
 .refer-list{
   background:var(--card-light);
   border-radius:12px;
@@ -1182,6 +1179,24 @@ body{
   font-weight:700;
   margin-left:8px;
 }
+.coin-conversion-display{
+  margin-top:8px;
+  padding:12px;
+  background:rgba(255,193,7,0.1);
+  border-radius:8px;
+  border-left:3px solid var(--accent);
+  display:none;
+}
+.coin-conversion-display .label{
+  color:var(--text-secondary);
+  font-size:13px;
+}
+.coin-conversion-display .value{
+  color:var(--accent);
+  font-weight:700;
+  font-size:15px;
+  margin-left:5px;
+}
 @media (max-width: 768px) {
   .wallet-cards {
     grid-template-columns: 1fr;
@@ -1268,7 +1283,6 @@ body{
       <span id="notice-text">Welcome to Take Master Dashboard!</span>
     </div>
 
-    <!-- Daily Bonus Card -->
     <div class="daily-bonus-card" id="daily-bonus-card">
       <div class="bonus-title">🎁 Daily Bonus</div>
       <div class="bonus-amount" id="bonus-amount">+0</div>
@@ -1279,7 +1293,6 @@ body{
       </button>
     </div>
 
-    <!-- Refer Card -->
     <div class="refer-card">
       <div class="refer-title">🎯 Invite Friends & Earn</div>
       <div class="refer-reward">
@@ -1315,7 +1328,6 @@ body{
     </div>
   </div>
 
-  <!-- Refer Section -->
   <div id="refer-section" class="section">
     <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
     <h2>🎯 Referral System</h2>
@@ -1435,8 +1447,7 @@ body{
     
     <div class="balance-display">
       <div class="label">Available Balance</div>
-      <div class="amount" id="withdraw-balance">0</div>
-      <div class="label">coins</div>
+      <div class="amount" id="withdraw-balance">0 coins (0 ৳)</div>
     </div>
     
     <div class="withdraw-methods">
@@ -1445,15 +1456,22 @@ body{
     </div>
     
     <div class="form-group">
+      <label>Payment Method</label>
       <input type="text" id="withdraw-method" value="nagad" readonly>
     </div>
     
     <div class="form-group">
-      <input type="text" id="withdraw-account" placeholder="Account Number">
+      <label>Account Number</label>
+      <input type="text" id="withdraw-account" placeholder="01XXXXXXXXX">
     </div>
     
     <div class="form-group">
-      <input type="number" id="withdraw-amount" placeholder="Amount (Min 100)">
+      <label>Amount in BDT (৳)</label>
+      <input type="number" id="withdraw-amount" placeholder="Enter amount in Taka" oninput="showCoinConversion()">
+      <div id="coin-conversion-display" class="coin-conversion-display">
+        <span class="label">Required coins:</span>
+        <span class="value" id="required-coins">0</span>
+      </div>
     </div>
     
     <span class="error-msg" id="withdraw-error"></span>
@@ -1547,6 +1565,47 @@ let deviceFingerprint = null;
 let userIP = null;
 let dailyBonusSettings = {amount: 50, enabled: true};
 let referSettings = {reward: 100, enabled: true};
+let conversionRate = 100;
+let minWithdrawBDT = 50;
+
+function loadConversionRate(){
+  db.ref('settings/conversion').on('value', snapshot => {
+    if(snapshot.exists()){
+      const data = snapshot.val();
+      conversionRate = data.coinsPerTaka || 100;
+      minWithdrawBDT = data.minWithdrawBDT || 50;
+      updateWithdrawDisplay();
+    }
+  });
+}
+
+function coinsToBDT(coins){
+  return Math.floor(coins / conversionRate);
+}
+
+function bdtToCoins(bdt){
+  return bdt * conversionRate;
+}
+
+function updateWithdrawDisplay(){
+  const balanceInBDT = coinsToBDT(userBalance);
+  document.getElementById('withdraw-balance').innerText = userBalance + ' coins (' + balanceInBDT + ' ৳)';
+}
+
+function showCoinConversion(){
+  const bdtInput = document.getElementById('withdraw-amount').value;
+  const display = document.getElementById('coin-conversion-display');
+  const requiredCoinsElem = document.getElementById('required-coins');
+  
+  if(bdtInput && !isNaN(bdtInput) && parseInt(bdtInput) > 0){
+    const bdt = parseInt(bdtInput);
+    const requiredCoins = bdtToCoins(bdt);
+    requiredCoinsElem.innerText = requiredCoins + ' coins';
+    display.style.display = 'block';
+  } else {
+    display.style.display = 'none';
+  }
+}
 
 async function getDeviceFingerprint(){
   try {
@@ -1613,7 +1672,6 @@ function startLiveActivityTracking(){
   liveActivityRef.onDisconnect().remove();
 }
 
-// Daily Bonus Functions
 function loadDailyBonusSettings(){
   db.ref('settings/dailyBonus').on('value', snapshot => {
     if(snapshot.exists()){
@@ -1716,7 +1774,6 @@ function claimDailyBonus(){
       showSuccessAnimation(bonusAmount);
       updateDailyBonusUI();
       
-      // Send notification
       db.ref('notifications/' + uid).push({
         title: '🎁 Daily Bonus Claimed',
         message: `You received ${bonusAmount} coins! Current streak: ${newStreak} days`,
@@ -1728,7 +1785,6 @@ function claimDailyBonus(){
   });
 }
 
-// Refer System Functions
 function loadReferSettings(){
   db.ref('settings/referral').on('value', snapshot => {
     if(snapshot.exists()){
@@ -1863,7 +1919,6 @@ async function processReferral(referCode, newUserId){
   
   const referCodeUpper = referCode.toUpperCase().trim();
   
-  // Find user with this refer code
   const usersSnapshot = await db.ref('users').orderByChild('referCode').equalTo(referCodeUpper).once('value');
   
   if(!usersSnapshot.exists()){
@@ -1880,11 +1935,9 @@ async function processReferral(referCode, newUserId){
   
   const reward = referSettings.reward || 100;
   
-  // Get new user data
   const newUserSnapshot = await db.ref('users/' + newUserId).once('value');
   const newUserData = newUserSnapshot.val();
   
-  // Give reward to referrer
   await db.ref('users/' + referrerId).transaction(data => {
     if(data){
       data.balance = (data.balance || 0) + reward;
@@ -1895,7 +1948,6 @@ async function processReferral(referCode, newUserId){
     return data;
   });
   
-  // Give reward to new user
   await db.ref('users/' + newUserId).update({
     balance: (newUserData.balance || 0) + reward,
     totalEarned: (newUserData.totalEarned || 0) + reward,
@@ -1903,7 +1955,6 @@ async function processReferral(referCode, newUserId){
     referredByCode: referCodeUpper
   });
   
-  // Add to referrals list
   await db.ref('referrals/' + referrerId).push({
     userId: newUserId,
     userName: newUserData.name || 'User',
@@ -1912,7 +1963,6 @@ async function processReferral(referCode, newUserId){
     date: new Date().toLocaleString()
   });
   
-  // Send notifications
   await db.ref('notifications/' + referrerId).push({
     title: '🎯 New Referral!',
     message: `${newUserData.name || 'Someone'} joined using your code! You earned ${reward} coins.`,
@@ -2490,7 +2540,6 @@ async function signup(){
       isSuspicious: false
     });
     
-    // Process referral if code provided
     if(referCode){
       await processReferral(referCode, currentUser.uid);
     }
@@ -2547,7 +2596,7 @@ function selectMethod(method){
 function submitWithdraw(){
   const method = document.getElementById('withdraw-method').value.trim();
   const account = document.getElementById('withdraw-account').value.trim();
-  const amountInput = document.getElementById('withdraw-amount').value;
+  const bdtInput = document.getElementById('withdraw-amount').value;
   
   clearError('withdraw-error');
   clearError('withdraw-success');
@@ -2557,19 +2606,22 @@ function submitWithdraw(){
     return;
   }
   
-  const amount = parseInt(amountInput);
+  const bdtAmount = parseInt(bdtInput);
   
-  if(!amountInput || isNaN(amount) || amount < 100){
-    showError('withdraw-error', '⚠️ Min 100 coins');
+  if(!bdtInput || isNaN(bdtAmount) || bdtAmount < minWithdrawBDT){
+    showError('withdraw-error', `⚠️ Min ${minWithdrawBDT} ৳ withdraw`);
     return;
   }
   
-  if(amount > userBalance){
-    showError('withdraw-error', '⚠️ Insufficient balance');
+  const requiredCoins = bdtToCoins(bdtAmount);
+  
+  if(requiredCoins > userBalance){
+    const availableBDT = coinsToBDT(userBalance);
+    showError('withdraw-error', `⚠️ Insufficient balance. You have ${userBalance} coins (${availableBDT} ৳)`);
     return;
   }
   
-  if(!confirm(`Withdraw ${amount} coins?`)) return;
+  if(!confirm(`Withdraw ${bdtAmount} ৳ (${requiredCoins} coins)?`)) return;
   
   const submitBtn = document.getElementById('withdraw-submit-btn');
   submitBtn.disabled = true;
@@ -2585,28 +2637,30 @@ function submitWithdraw(){
     userEmail: userData.email || currentUser.email || 'N/A',
     method: method,
     account: account,
-    amount: amount,
-    bdtAmount: amount,
+    coinAmount: requiredCoins,
+    bdtAmount: bdtAmount,
+    conversionRate: conversionRate,
     status: 'pending',
     requestedAt: Date.now(),
     date: new Date().toLocaleString()
   };
   
-  const newBalance = userBalance - amount;
-  const newPending = (userData.pendingWithdraw || 0) + amount;
+  const newBalance = userBalance - requiredCoins;
+  const newPending = (userData.pendingWithdraw || 0) + requiredCoins;
   
   db.ref('users/' + uid).update({balance: newBalance, pendingWithdraw: newPending})
   .then(() => db.ref('withdraw_requests').push(withdrawData))
   .then(() => {
-    showSuccess('withdraw-success', '✅ Request submitted!');
+    showSuccess('withdraw-success', `✅ Withdraw request submitted! You will receive ${bdtAmount} ৳`);
     document.getElementById('withdraw-account').value = '';
     document.getElementById('withdraw-amount').value = '';
+    document.getElementById('coin-conversion-display').style.display = 'none';
     submitBtn.disabled = false;
     submitBtn.innerText = '💸 Request Withdraw';
     setTimeout(() => {
       clearError('withdraw-success');
       showSection('dashboard');
-    }, 2000);
+    }, 3000);
   })
   .catch(error => {
     showError('withdraw-error', '❌ Failed');
@@ -2688,7 +2742,7 @@ function loadUserProfile(){
     document.getElementById('user-phone').innerText = '📱 ' + data.phone;
     document.getElementById('user-uid').innerText = '🆔 ' + data.userID;
     document.getElementById('user-balance').innerText = userBalance;
-    document.getElementById('withdraw-balance').innerText = userBalance;
+    updateWithdrawDisplay();
   });
 }
 
@@ -2765,6 +2819,7 @@ auth.onAuthStateChanged(user => {
     loadReferSettings();
     loadMyReferCode();
     loadReferStats();
+    loadConversionRate();
     startLiveActivityTracking();
   } else {
     currentUser = null;
@@ -2773,7 +2828,6 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// Check URL for referral code
 const urlParams = new URLSearchParams(window.location.search);
 const refCode = urlParams.get('ref');
 if(refCode){
@@ -2784,7 +2838,7 @@ if(refCode){
 }
 
 initializeDeviceDetection();
-console.log('✅ Take Master Loaded - Refer & Daily Bonus Active');
+console.log('✅ Take Master Loaded - Coin Conversion System Active');
 </script>
 </body>
 </html>
