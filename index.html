@@ -70,15 +70,6 @@ body{
   75% { transform: translateX(10px); }
 }
 
-/* Faster spinning animation */
-@keyframes reelSpinFast {
-  0% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-15px) rotate(90deg); }
-  50% { transform: translateY(-20px) rotate(180deg); }
-  75% { transform: translateY(-15px) rotate(270deg); }
-  100% { transform: translateY(0) rotate(360deg); }
-}
-
 .container{
   max-width:450px;
   margin:20px auto;
@@ -90,35 +81,6 @@ body{
   padding-bottom:50px;
   border:1px solid rgba(255,255,255,0.1);
 }
-
-.header-title-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-  justify-content: center;
-}
-.header-title {
-  font-weight: 700;
-  color: #fff;
-  font-size: 18px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-.header-telegram-btn {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  text-decoration: none;
-  color: #000;
-  background: linear-gradient(135deg,#ffd700,#ffa500);
-  box-shadow: 0 2px 8px rgba(255,215,0,0.3);
-  transition: transform .2s, box-shadow .2s;
-}
-.header-telegram-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255,215,0,0.5);
-}
-
 .main-header{
   display:flex;
   align-items:center;
@@ -141,6 +103,12 @@ body{
   transition:0.3s;
 }
 .menu-btn:hover{background:rgba(255,255,255,0.3);}
+.header-title{
+  font-weight:700;
+  color:#fff;
+  font-size:18px;
+  text-shadow:0 2px 4px rgba(0,0,0,0.2);
+}
 .notification-icon{
   font-size:24px;
   cursor:pointer;
@@ -206,7 +174,6 @@ body{
 }
 .menu-list li:hover{background:rgba(102,126,234,0.2);color:var(--text-primary);}
 .menu-list .active{background:rgba(102,126,234,0.3);color:var(--text-primary);font-weight:700;border-left:4px solid var(--primary);}
-
 .profile-card{
   background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
   border-radius:20px;
@@ -1111,9 +1078,6 @@ body{
 .wallet-card.gold{
   background:linear-gradient(135deg,var(--accent) 0%,#f76b1c 100%);
 }
-.wallet-card.purple{
-  background:linear-gradient(135deg,#9b59b6 0%,#8e44ad 100%);
-}
 .wallet-card .icon{
   font-size:32px;
   margin-bottom:10px;
@@ -1233,257 +1197,6 @@ body{
   font-size:15px;
   margin-left:5px;
 }
-
-/* ===========================
-   SLOT MACHINE CSS
-   =========================== */
-.slot-card{
-  background:linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:16px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.4);
-  padding:20px;
-  margin:15px;
-  color:#fff;
-}
-.slot-title{font-size:20px;font-weight:700;margin-bottom:10px;}
-.slot-meta{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
-  background:rgba(255,255,255,0.05);
-  border-radius:10px;padding:10px 12px;margin-bottom:12px;
-  border:1px solid rgba(255,255,255,0.08);
-}
-.slot-badge{font-weight:700;padding:6px 10px;border-radius:8px;}
-.slot-badge.ok{background:rgba(46,204,113,0.2);color:#2ecc71;border:1px solid rgba(46,204,113,0.5);}
-.slot-badge.no{background:rgba(231,76,60,0.2);color:#e74c3c;border:1px solid rgba(231,76,60,0.5);}
-.slot-board{
-  background:var(--card-light);
-  border-radius:12px;
-  padding:15px;
-  border:1px solid rgba(255,255,255,0.08);
-  margin-bottom:12px;
-}
-.slot-balance{font-size:16px;font-weight:600;margin-bottom:6px;}
-.slot-msg{font-size:13px;color:var(--text-secondary);}
-.reel-area{
-  display:flex;justify-content:center;align-items:center;gap:12px;
-  background:linear-gradient(135deg,#222,#333);
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.1);
-  padding:20px;margin:10px 0 14px 0;
-}
-.reel{
-  width:90px;height:90px;border-radius:12px;background:rgba(0,0,0,0.4);
-  display:flex;align-items:center;justify-content:center;font-size:52px;
-  border:2px solid rgba(255,255,255,0.15);
-  transition:transform 0.1s ease;
-  box-shadow:inset 0 4px 12px rgba(0,0,0,0.5);
-}
-.reel.spinning{
-  animation:reelSpinFast 0.3s linear infinite;
-}
-.slot-ctrls{
-  display:flex;flex-direction:column;gap:10px;
-}
-.spin-btn{
-  padding:14px;
-  background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);
-  color:#fff;border:none;border-radius:10px;font-weight:800;font-size:16px;cursor:pointer;
-  box-shadow:0 8px 20px rgba(245,87,108,0.4);
-}
-.spin-btn:disabled{background:#555;color:#aaa;cursor:not-allowed;opacity:0.7;box-shadow:none}
-.slot-info{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-}
-.slot-info .card{
-  background:var(--card-light);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.1);
-}
-.slot-info .label{font-size:12px;color:var(--text-secondary)}
-.slot-info .value{font-size:18px;font-weight:700;margin-top:6px;color:#fff}
-
-.deposit-box{
-  background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);
-  border-radius:12px;padding:14px;margin-top:10px;
-  border:1px solid rgba(255,255,255,0.15);
-}
-.deposit-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;}
-.deposit-virtual{
-  background:#fff;color:#000;border-radius:8px;padding:8px 10px;font-weight:800;display:inline-block;
-  letter-spacing:1px;
-}
-.dep-actions{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;}
-.btn-outline{
-  background:transparent;border:1px solid #fff;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:700;
-}
-.btn-outline:hover{background:rgba(255,255,255,0.1)}
-.btn-primary{
-  background:linear-gradient(135deg,var(--primary),#3a7bc8);
-  color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-weight:700;
-}
-.btn-primary:hover{transform:scale(1.05)}
-.small{
-  font-size:12px;opacity:0.9
-}
-
-.slot-history{
-  background:var(--card-light);border-radius:12px;padding:12px;margin-top:12px;border:1px solid rgba(255,255,255,0.08);
-}
-.hist-item{display:flex;justify-content:space-between;gap:10px;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.06)}
-.hist-item:last-child{border-bottom:none}
-.hist-left{display:flex;gap:8px;align-items:center}
-.hist-badge{
-  width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,0.1);font-weight:800
-}
-.hist-win{color:#2ecc71}
-.hist-lose{color:#e74c3c}
-.hist-time{font-size:12px;color:var(--text-secondary)}
-
-/* Game Wallet Withdraw Styles */
-.game-wallet-section{
-  background:linear-gradient(135deg,rgba(155,89,182,0.1) 0%,rgba(142,68,173,0.1) 100%);
-  border:1px solid rgba(155,89,182,0.3);
-  border-radius:15px;
-  padding:20px;
-  margin:15px 0;
-  position:relative;
-  overflow:hidden;
-}
-.game-wallet-section::before{
-  content:'🎰';
-  position:absolute;
-  font-size:120px;
-  opacity:0.1;
-  top:-30px;
-  right:-30px;
-  animation:pulse 3s ease-in-out infinite;
-}
-.game-wallet-title{
-  font-size:20px;
-  font-weight:700;
-  color:#9b59b6;
-  margin-bottom:15px;
-  text-shadow:0 2px 4px rgba(0,0,0,0.2);
-}
-.game-wallet-balance{
-  background:linear-gradient(135deg,#9b59b6 0%,#8e44ad 100%);
-  color:#fff;
-  padding:15px;
-  border-radius:10px;
-  text-align:center;
-  margin-bottom:15px;
-}
-.game-wallet-balance .amount{
-  font-size:32px;
-  font-weight:700;
-}
-.game-wallet-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:15px;
-}
-.game-wallet-btn{
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  font-weight:700;
-  cursor:pointer;
-  transition:0.3s;
-  color:#fff;
-}
-.game-wallet-btn.deposit{
-  background:linear-gradient(135deg,#3498db 0%,#2980b9 100%);
-}
-.game-wallet-btn.withdraw{
-  background:linear-gradient(135deg,#e74c3c 0%,#c0392b 100%);
-}
-.game-wallet-btn:hover{
-  transform:translateY(-2px);
-}
-.game-wallet-btn:disabled{
-  background:#555;
-  cursor:not-allowed;
-  transform:none;
-  opacity:0.6;
-}
-
-/* Transfer Options */
-.transfer-options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:15px 0;
-}
-.transfer-option{
-  padding:15px;
-  border:2px solid rgba(255,255,255,0.2);
-  border-radius:10px;
-  background:var(--card-light);
-  cursor:pointer;
-  text-align:center;
-  transition:0.3s;
-}
-.transfer-option:hover{
-  border-color:var(--primary);
-  background:rgba(102,126,234,0.2);
-}
-.transfer-option.active{
-  border-color:var(--primary);
-  background:rgba(102,126,234,0.2);
-  color:#64b5f6;
-}
-.transfer-amount{
-  font-size:24px;
-  font-weight:700;
-  margin:10px 0;
-  color:#9b59b6;
-}
-
-/* Trading Styles */
-.trading-card{
-  background:var(--card);
-  border-radius:15px;
-  padding:20px;
-  margin:15px;
-  border:1px solid rgba(255,255,255,0.1);
-}
-.trading-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
-}
-.trading-price{
-  font-size:28px;
-  font-weight:700;
-  color:#ffd700;
-  text-shadow:0 2px 4px rgba(0,0,0,0.3);
-}
-.trading-change{
-  font-size:18px;
-  font-weight:700;
-  padding:8px 12px;
-  border-radius:8px;
-}
-.trading-change.up{
-  background:rgba(46,204,113,0.2);
-  color:#2ecc71;
-  border:1px solid rgba(46,204,113,0.5);
-}
-.trading-change.down{
-  background:rgba(231,76,60,0.2);
-  color:#e74c3c;
-  border:1px solid rgba(231,76,60,0.5);
-}
-.trading-chart{
-  height:240px; /* Fixed height for trading chart */
-  margin:15px 0;
-  border-radius:12px;
-  background:var(--card-light);
-  padding:10px;
-}
-
 @media (max-width: 768px) {
   .wallet-cards {
     grid-template-columns: 1fr;
@@ -1509,13 +1222,6 @@ body{
   .refer-stats {
     grid-template-columns: 1fr;
   }
-  .game-wallet-actions,
-  .transfer-options {
-    grid-template-columns: 1fr;
-  }
-  .trading-chart {
-    height: 200px;
-  }
 }
 </style>
 
@@ -1523,7 +1229,6 @@ body{
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -1552,10 +1257,7 @@ body{
 <div id="dashboard" class="container" style="display:none;">
   <div class="main-header">
     <button class="menu-btn" onclick="openMenu()">☰</button>
-    <div class="header-title-area">
-      <div class="header-title">Take Master</div>
-      <a id="telegram-header-btn" class="header-telegram-btn" href="#" target="_blank" rel="noopener">Join Telegram</a>
-    </div>
+    <div class="header-title">Take Master</div>
     <div class="notification-icon" onclick="showSection('notifications-section')">🔔
       <span class="notification-count" id="notification-count" style="display:none;">0</span>
     </div>
@@ -1747,56 +1449,35 @@ body{
       <div class="label">Available Balance</div>
       <div class="amount" id="withdraw-balance">0 coins (0 ৳)</div>
     </div>
-
-    <!-- Game Wallet Withdraw Section -->
-    <div class="game-wallet-section">
-      <div class="game-wallet-title">🎰 Game Wallet</div>
-      <div class="game-wallet-balance">
-        <div class="amount" id="game-wallet-balance">0 coins</div>
-        <div class="small">Your game winnings</div>
-      </div>
-      <div class="game-wallet-actions">
-        <button class="game-wallet-btn deposit" onclick="showGameWalletTransfer('toMain')">
-          💰 Transfer to Main
-        </button>
-        <button class="game-wallet-btn withdraw" onclick="showGameWalletWithdraw()">
-          🏦 Withdraw Game Coins
-        </button>
+    
+    <div class="withdraw-methods">
+      <div class="method-btn active" onclick="selectMethod('nagad')">📱 Nagad</div>
+      <div class="method-btn" onclick="selectMethod('rocket')">🚀 Rocket</div>
+    </div>
+    
+    <div class="form-group">
+      <label>Payment Method</label>
+      <input type="text" id="withdraw-method" value="nagad" readonly>
+    </div>
+    
+    <div class="form-group">
+      <label>Account Number</label>
+      <input type="text" id="withdraw-account" placeholder="01XXXXXXXXX">
+    </div>
+    
+    <div class="form-group">
+      <label>Amount in BDT (৳)</label>
+      <input type="number" id="withdraw-amount" placeholder="Enter amount in Taka" oninput="showCoinConversion()">
+      <div id="coin-conversion-display" class="coin-conversion-display">
+        <span class="label">Required coins:</span>
+        <span class="value" id="required-coins">0</span>
       </div>
     </div>
     
-    <!-- Main Wallet Withdraw -->
-    <div class="profile-settings-card">
-      <h3>💰 Main Wallet Withdraw</h3>
-      <div class="withdraw-methods">
-        <div class="method-btn active" onclick="selectMethod('nagad')">📱 Nagad</div>
-        <div class="method-btn" onclick="selectMethod('rocket')">🚀 Rocket</div>
-      </div>
-      
-      <div class="form-group">
-        <label>Payment Method</label>
-        <input type="text" id="withdraw-method" value="nagad" readonly>
-      </div>
-      
-      <div class="form-group">
-        <label>Account Number</label>
-        <input type="text" id="withdraw-account" placeholder="01XXXXXXXXX">
-      </div>
-      
-      <div class="form-group">
-        <label>Amount in BDT (৳)</label>
-        <input type="number" id="withdraw-amount" placeholder="Enter amount in Taka" oninput="showCoinConversion()">
-        <div id="coin-conversion-display" class="coin-conversion-display">
-          <span class="label">Required coins:</span>
-          <span class="value" id="required-coins">0</span>
-        </div>
-      </div>
-      
-      <span class="error-msg" id="withdraw-error"></span>
-      <span class="success-msg" id="withdraw-success"></span>
-      
-      <button class="submit-btn" id="withdraw-submit-btn" onclick="submitWithdraw()">💸 Request Withdraw</button>
-    </div>
+    <span class="error-msg" id="withdraw-error"></span>
+    <span class="success-msg" id="withdraw-success"></span>
+    
+    <button class="submit-btn" id="withdraw-submit-btn" onclick="submitWithdraw()">💸 Request Withdraw</button>
   </div>
 
   <div id="wallet-section" class="section">
@@ -1807,7 +1488,7 @@ body{
       <div class="wallet-card">
         <div class="icon">💰</div>
         <div class="amount" id="wallet-current-balance">0</div>
-        <div class="label">Main Balance</div>
+        <div class="label">Current Balance</div>
       </div>
       
       <div class="wallet-card green">
@@ -1822,45 +1503,11 @@ body{
         <div class="label">Total Withdrawn</div>
       </div>
       
-      <div class="wallet-card purple">
-        <div class="icon">🎰</div>
-        <div class="amount" id="wallet-game-balance">0</div>
-        <div class="label">Game Wallet</div>
+      <div class="wallet-card">
+        <div class="icon">⏳</div>
+        <div class="amount" id="wallet-pending">0</div>
+        <div class="label">Pending</div>
       </div>
-    </div>
-
-    <!-- Transfer Between Wallets -->
-    <div class="profile-settings-card">
-      <h3>↔️ Transfer Between Wallets</h3>
-      
-      <div class="transfer-options">
-        <div class="transfer-option active" id="transfer-main-to-game" onclick="selectTransferOption('mainToGame')">
-          <div>Main ➜ Game</div>
-          <div class="transfer-amount" id="main-to-game-amount">0</div>
-        </div>
-        <div class="transfer-option" id="transfer-game-to-main" onclick="selectTransferOption('gameToMain')">
-          <div>Game ➜ Main</div>
-          <div class="transfer-amount" id="game-to-main-amount">0</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Transfer Amount (Coins)</label>
-        <input type="number" id="transfer-amount" placeholder="Enter coins to transfer" min="1">
-        <div id="transfer-info" class="coin-conversion-display">
-          <span class="label">Info:</span>
-          <span class="value" id="transfer-details">Select transfer option</span>
-        </div>
-      </div>
-
-      <div style="display:flex; gap:10px; margin-top:15px;">
-        <button class="btn-primary" style="flex:1; padding:12px;" onclick="executeTransfer()">
-          🔄 Transfer
-        </button>
-      </div>
-
-      <div id="transfer-error" class="error-msg"></div>
-      <div id="transfer-success" class="success-msg"></div>
     </div>
   </div>
 
@@ -1870,80 +1517,6 @@ body{
     
     <div id="notifications-list">
       <div style="text-align:center;padding:20px;">No notifications</div>
-    </div>
-  </div>
-
-  <!-- LIVE TRADING -->
-  <div id="trading-section" class="section">
-    <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
-    <h2>📈 Live Trading</h2>
-
-    <div class="trading-card">
-      <div class="trading-header">
-        <div>
-          <div style="font-size:14px;color:var(--text-secondary)">Like Coin Price (Coins per 1 Taka)</div>
-          <div class="trading-price" id="trading-price">-</div>
-        </div>
-        <div class="trading-change up" id="trading-change">-</div>
-      </div>
-      <div class="trading-chart">
-        <canvas id="priceChart"></canvas>
-      </div>
-      <!-- Removed trading action buttons as requested -->
-    </div>
-  </div>
-
-  <!-- SLOT MACHINE SECTION -->
-  <div id="slot-section" class="section">
-    <button class="back-btn" onclick="showSection('dashboard')">← Back</button>
-    <h2>🎰 Slot Machine</h2>
-
-    <div class="slot-card">
-      <div class="slot-title">🍀 Weekly Spin (Friday Only)</div>
-      <div class="slot-meta">
-        <div>Status: <span id="slot-status-badge" class="slot-badge no">Checking...</span></div>
-        <div>Spin Cost: <strong id="slot-spin-cost">-</strong> coins</div>
-        <div>Next Round: <strong id="slot-next-round">-</strong></div>
-        <div>Your Game Wallet: <strong id="slot-wallet-balance">0</strong> coins</div>
-      </div>
-
-      <div class="slot-board">
-        <div class="slot-balance">Main Balance → Game Wallet</div>
-        <div style="display:flex;gap:10px;align-items:center;margin:10px 0;">
-          <div style="flex:1;">
-            <input type="number" id="deposit-amount" placeholder="Coins to deposit" min="1" style="width:100%;padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,0.1);background:var(--card);color:var(--text-primary);">
-          </div>
-          <button class="btn-primary" onclick="depositToGameWallet()">💰 Deposit</button>
-        </div>
-        <div id="game-wallet-display" class="slot-msg">Loading...</div>
-      </div>
-
-      <div class="reel-area" id="reel-area">
-        <div class="reel" id="reel-1">❔</div>
-        <div class="reel" id="reel-2">❔</div>
-        <div class="reel" id="reel-3">❔</div>
-      </div>
-
-      <div class="slot-ctrls">
-        <button class="spin-btn" id="spin-btn" disabled onclick="startSpin()">🔒 Not Available</button>
-        <div id="slot-msg" class="slot-msg"></div>
-      </div>
-
-      <div class="slot-info">
-        <div class="card">
-          <div class="label">Current Round</div>
-          <div class="value" id="slot-round-id">-</div>
-        </div>
-        <div class="card">
-          <div class="label">Last Result</div>
-          <div class="value" id="slot-last-result">-</div>
-        </div>
-      </div>
-
-      <div class="slot-history">
-        <div style="font-weight:700;margin-bottom:6px;">📜 Spin History</div>
-        <div id="slot-history-list">No spins yet</div>
-      </div>
     </div>
   </div>
 
@@ -1958,21 +1531,16 @@ body{
       <li onclick="showSection('profile-section')">👤 Profile</li>
       <li onclick="showSection('refer-section')">🎯 Referral</li>
       <li onclick="showSection('leaderboard-section')">🏆 Leaderboard</li>
-      <li onclick="showSection('trading-section')">📈 Live Trading</li>
       <li onclick="showSection('chat-section')">💬 Chat</li>
       <li onclick="showSection('withdraw-section')">💸 Withdraw</li>
       <li onclick="showSection('wallet-section')">💼 Wallet</li>
       <li onclick="showSection('notifications-section')">🔔 Notifications</li>
-      <li onclick="showSection('slot-section')">🎰 Slot Machine</li>
       <li onclick="logout()">🚪 Logout</li>
     </ul>
   </div>
 </div>
 
 <script>
-// =====================================================
-// FIREBASE SETUP
-// =====================================================
 const firebaseConfig = {
   apiKey: "AIzaSyD6NfQHIlegwL2dU996GqqLT-BCk35U7Js",
   authDomain: "taskmaster-2c470.firebaseapp.com",
@@ -1982,13 +1550,11 @@ const firebaseConfig = {
   messagingSenderId: "975980927095",
   appId: "1:975980927095:web:d2c46612fa1f62e6c48e72"
 };
+
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-// =====================================================
-// GLOBAL VARS
-// =====================================================
 let currentUser = null;
 let userBalance = 0;
 let isSignupMode = false;
@@ -1999,41 +1565,9 @@ let deviceFingerprint = null;
 let userIP = null;
 let dailyBonusSettings = {amount: 50, enabled: true};
 let referSettings = {reward: 100, enabled: true};
-let conversionRate = 100;   // coins per 1 BDT (default)
+let conversionRate = 100;
 let minWithdrawBDT = 50;
-let telegramChannelLink = 'https://t.me/your_channel';
 
-// =====================================================
-// SLOT MACHINE VARS
-// =====================================================
-const SLOT_SYMBOLS = ["🍒","🍋","🍊","🍇","🍉","⭐","7️⃣"];
-let slotSettings = {
-  enabledDays: [5],            // default Friday
-  spinCost: 10,
-  minDeposit: 50,
-  virtualNumbers: { nagad: "01XXXXXXXXX", rocket: "01XXXXXXXXX" }
-};
-let currentSlotRound = null;
-let slotWalletBalance = 0;
-let lastSpinResult = null;
-let isSpinning = false;
-let userWinRate = 15; // Admin controlled win rate (0-100)
-
-// =====================================================
-// LIVE TRADING VARS
-// =====================================================
-let tradingChart = null;
-let priceHistory = []; // {t: timestamp, v: price}
-
-// =====================================================
-// GAME WALLET VARS
-// =====================================================
-let gameWalletTransactions = [];
-let currentTransferOption = 'mainToGame';
-
-// =====================================================
-// UTILS
-// =====================================================
 function loadConversionRate(){
   db.ref('settings/conversion').on('value', snapshot => {
     if(snapshot.exists()){
@@ -2044,20 +1578,25 @@ function loadConversionRate(){
     }
   });
 }
+
 function coinsToBDT(coins){
   return Math.floor(coins / conversionRate);
 }
+
 function bdtToCoins(bdt){
   return bdt * conversionRate;
 }
+
 function updateWithdrawDisplay(){
   const balanceInBDT = coinsToBDT(userBalance);
   document.getElementById('withdraw-balance').innerText = userBalance + ' coins (' + balanceInBDT + ' ৳)';
 }
+
 function showCoinConversion(){
   const bdtInput = document.getElementById('withdraw-amount').value;
   const display = document.getElementById('coin-conversion-display');
   const requiredCoinsElem = document.getElementById('required-coins');
+  
   if(bdtInput && !isNaN(bdtInput) && parseInt(bdtInput) > 0){
     const bdt = parseInt(bdtInput);
     const requiredCoins = bdtToCoins(bdt);
@@ -2067,6 +1606,7 @@ function showCoinConversion(){
     display.style.display = 'none';
   }
 }
+
 async function getDeviceFingerprint(){
   try {
     const fpPromise = FingerprintJS.load();
@@ -2079,6 +1619,7 @@ async function getDeviceFingerprint(){
     return deviceFingerprint;
   }
 }
+
 async function getUserIP(){
   try {
     const response = await Promise.race([fetch('https://api.ipify.org?format=json'), new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))]);
@@ -2090,13 +1631,17 @@ async function getUserIP(){
     return userIP;
   }
 }
+
 async function initializeDeviceDetection(){
   await Promise.all([getDeviceFingerprint(), getUserIP()]);
 }
+
 function startLiveActivityTracking(){
   if(!currentUser) return;
+  
   const uid = currentUser.uid;
   const liveActivityRef = db.ref('liveActivity/' + uid);
+  
   liveActivityRef.set({
     uid: uid,
     userName: userData.name || 'Unknown',
@@ -2114,6 +1659,7 @@ function startLiveActivityTracking(){
     totalAdsViewed: userData.adsViewed || 0,
     tabSwitches: 0
   });
+  
   setInterval(() => {
     if(currentUser){
       liveActivityRef.update({
@@ -2122,27 +1668,10 @@ function startLiveActivityTracking(){
       });
     }
   }, 10000);
+  
   liveActivityRef.onDisconnect().remove();
 }
 
-// =====================================================
-// TELEGRAM
-// =====================================================
-function loadTelegramChannel(){
-  // Default fallback link (update-able from DB)
-  telegramChannelLink = telegramChannelLink || 'https://t.me/your_channel';
-  db.ref('settings/telegramChannel').on('value', snap=>{
-    telegramChannelLink = snap.val() || telegramChannelLink;
-    const btn = document.getElementById('telegram-header-btn');
-    if(btn && telegramChannelLink){
-      btn.href = telegramChannelLink;
-    }
-  });
-}
-
-// =====================================================
-// DAILY BONUS
-// =====================================================
 function loadDailyBonusSettings(){
   db.ref('settings/dailyBonus').on('value', snapshot => {
     if(snapshot.exists()){
@@ -2151,25 +1680,33 @@ function loadDailyBonusSettings(){
     updateDailyBonusUI();
   });
 }
+
 function updateDailyBonusUI(){
   if(!currentUser) return;
+  
   const bonusAmount = dailyBonusSettings.amount || 50;
   const enabled = dailyBonusSettings.enabled !== false;
+  
   document.getElementById('bonus-amount').innerText = '+' + bonusAmount;
+  
   if(!enabled){
     document.getElementById('claim-bonus-btn').disabled = true;
     document.getElementById('claim-bonus-btn').innerText = 'Daily Bonus Disabled';
     document.getElementById('bonus-timer').innerText = 'Currently unavailable';
     return;
   }
+  
   db.ref('users/' + currentUser.uid).once('value').then(snapshot => {
     const data = snapshot.val();
     const lastClaim = data.lastDailyBonus || 0;
     const streak = data.dailyStreak || 0;
+    
     document.getElementById('bonus-streak').innerText = '🔥 Streak: ' + streak + ' days';
+    
     const now = Date.now();
     const oneDayMs = 24 * 60 * 60 * 1000;
     const timeSinceClaim = now - lastClaim;
+    
     if(timeSinceClaim >= oneDayMs){
       document.getElementById('claim-bonus-btn').disabled = false;
       document.getElementById('claim-bonus-btn').innerText = '🎁 Claim ' + bonusAmount + ' Coins';
@@ -2181,42 +1718,53 @@ function updateDailyBonusUI(){
     }
   });
 }
+
 function updateBonusTimer(remainingMs){
   const hours = Math.floor(remainingMs / (1000 * 60 * 60));
   const minutes = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((remainingMs % (1000 * 60)) / 1000);
+  
   document.getElementById('bonus-timer').innerText = `Next in: ${hours}h ${minutes}m ${seconds}s`;
   document.getElementById('claim-bonus-btn').innerText = `⏰ Come back later`;
+  
   if(remainingMs > 0){
     setTimeout(() => updateBonusTimer(remainingMs - 1000), 1000);
   } else {
     updateDailyBonusUI();
   }
 }
+
 function claimDailyBonus(){
   if(!currentUser) return;
+  
   const uid = currentUser.uid;
   const bonusAmount = dailyBonusSettings.amount || 50;
+  
   db.ref('users/' + uid).once('value').then(snapshot => {
     const data = snapshot.val();
     const lastClaim = data.lastDailyBonus || 0;
     const streak = data.dailyStreak || 0;
+    
     const now = Date.now();
     const oneDayMs = 24 * 60 * 60 * 1000;
     const twoDaysMs = 48 * 60 * 60 * 1000;
     const timeSinceClaim = now - lastClaim;
+    
     if(timeSinceClaim < oneDayMs){
       alert('⏰ You can claim once per day!');
       return;
     }
+    
     let newStreak = streak;
     if(timeSinceClaim < twoDaysMs){
       newStreak++;
     } else {
       newStreak = 1;
     }
+    
     const newBalance = (data.balance || 0) + bonusAmount;
     const newTotalEarned = (data.totalEarned || 0) + bonusAmount;
+    
     db.ref('users/' + uid).update({
       balance: newBalance,
       totalEarned: newTotalEarned,
@@ -2225,6 +1773,7 @@ function claimDailyBonus(){
     }).then(() => {
       showSuccessAnimation(bonusAmount);
       updateDailyBonusUI();
+      
       db.ref('notifications/' + uid).push({
         title: '🎁 Daily Bonus Claimed',
         message: `You received ${bonusAmount} coins! Current streak: ${newStreak} days`,
@@ -2236,9 +1785,6 @@ function claimDailyBonus(){
   });
 }
 
-// =====================================================
-// REFERRALS
-// =====================================================
 function loadReferSettings(){
   db.ref('settings/referral').on('value', snapshot => {
     if(snapshot.exists()){
@@ -2247,23 +1793,29 @@ function loadReferSettings(){
     updateReferUI();
   });
 }
+
 function updateReferUI(){
   const reward = referSettings.reward || 100;
   document.getElementById('refer-reward-display').innerText = '+' + reward;
   document.getElementById('refer-page-reward').innerText = reward + ' coins';
 }
+
 function loadMyReferCode(){
   if(!currentUser) return;
+  
   db.ref('users/' + currentUser.uid + '/referCode').once('value').then(snapshot => {
     let referCode = snapshot.val();
+    
     if(!referCode){
       referCode = generateReferCode();
       db.ref('users/' + currentUser.uid).update({referCode: referCode});
     }
+    
     document.getElementById('my-refer-code').innerText = referCode;
     document.getElementById('refer-page-code').innerText = referCode;
   });
 }
+
 function generateReferCode(){
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let code = 'TM';
@@ -2272,33 +1824,42 @@ function generateReferCode(){
   }
   return code;
 }
+
 function loadReferStats(){
   if(!currentUser) return;
+  
   db.ref('users/' + currentUser.uid).on('value', snapshot => {
     const data = snapshot.val();
     const totalRefers = data.totalReferrals || 0;
     const referEarnings = data.referralEarnings || 0;
+    
     document.getElementById('total-refers').innerText = totalRefers;
     document.getElementById('refer-earnings').innerText = referEarnings;
     document.getElementById('refer-page-total').innerText = totalRefers;
     document.getElementById('refer-page-earned').innerText = referEarnings + ' coins';
   });
 }
+
 function loadReferralList(){
   if(!currentUser) return;
+  
   db.ref('referrals/' + currentUser.uid).on('value', snapshot => {
     const container = document.getElementById('refer-list');
     container.innerHTML = '';
+    
     if(!snapshot.exists()){
       container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">No referrals yet</div>';
       return;
     }
+    
     const referrals = [];
     snapshot.forEach(child => {
       const refer = child.val();
       referrals.push(refer);
     });
+    
     referrals.sort((a, b) => b.timestamp - a.timestamp);
+    
     referrals.forEach(refer => {
       const div = document.createElement('div');
       div.className = 'refer-list-item';
@@ -2313,8 +1874,10 @@ function loadReferralList(){
     });
   });
 }
+
 function copyReferCode(){
   const code = document.getElementById('my-refer-code').innerText;
+  
   if(navigator.clipboard){
     navigator.clipboard.writeText(code).then(() => {
       alert('✅ Refer code copied: ' + code);
@@ -2329,10 +1892,12 @@ function copyReferCode(){
     alert('✅ Refer code copied: ' + code);
   }
 }
+
 function shareReferLink(){
   const code = document.getElementById('my-refer-code').innerText;
   const link = window.location.origin + window.location.pathname + '?ref=' + code;
   const text = `🎁 Join Take Master and earn money online!\n\nUse my referral code: ${code}\n\n🔗 ${link}`;
+  
   if(navigator.share){
     navigator.share({
       title: 'Take Master Referral',
@@ -2348,22 +1913,31 @@ function shareReferLink(){
     }
   }
 }
+
 async function processReferral(referCode, newUserId){
   if(!referCode) return;
+  
   const referCodeUpper = referCode.toUpperCase().trim();
+  
   const usersSnapshot = await db.ref('users').orderByChild('referCode').equalTo(referCodeUpper).once('value');
+  
   if(!usersSnapshot.exists()){
     console.log('Invalid refer code');
     return;
   }
+  
   const referrerId = Object.keys(usersSnapshot.val())[0];
+  
   if(referrerId === newUserId){
     console.log('Cannot refer yourself');
     return;
   }
+  
   const reward = referSettings.reward || 100;
+  
   const newUserSnapshot = await db.ref('users/' + newUserId).once('value');
   const newUserData = newUserSnapshot.val();
+  
   await db.ref('users/' + referrerId).transaction(data => {
     if(data){
       data.balance = (data.balance || 0) + reward;
@@ -2373,12 +1947,14 @@ async function processReferral(referCode, newUserId){
     }
     return data;
   });
+  
   await db.ref('users/' + newUserId).update({
     balance: (newUserData.balance || 0) + reward,
     totalEarned: (newUserData.totalEarned || 0) + reward,
     referredBy: referrerId,
     referredByCode: referCodeUpper
   });
+  
   await db.ref('referrals/' + referrerId).push({
     userId: newUserId,
     userName: newUserData.name || 'User',
@@ -2386,6 +1962,7 @@ async function processReferral(referCode, newUserId){
     timestamp: Date.now(),
     date: new Date().toLocaleString()
   });
+  
   await db.ref('notifications/' + referrerId).push({
     title: '🎯 New Referral!',
     message: `${newUserData.name || 'Someone'} joined using your code! You earned ${reward} coins.`,
@@ -2393,6 +1970,7 @@ async function processReferral(referCode, newUserId){
     date: new Date().toLocaleString(),
     read: false
   });
+  
   await db.ref('notifications/' + newUserId).push({
     title: '🎁 Welcome Bonus!',
     message: `You received ${reward} coins for joining with a referral code!`,
@@ -2400,28 +1978,32 @@ async function processReferral(referCode, newUserId){
     date: new Date().toLocaleString(),
     read: false
   });
+  
   console.log('Referral processed successfully');
 }
 
-// =====================================================
-// TASKS & AD POPUP
-// =====================================================
 function openTask(link, taskId){
   if(!currentUser) return;
+  
   db.ref('tasks/' + taskId).once('value').then(taskSnap => {
     const task = taskSnap.val();
     if(!task) return;
+    
     showAdPopup(task, taskId, link);
   });
 }
+
 function showAdPopup(task, taskId, link){
   const popup = document.createElement('div');
   popup.className = 'ad-popup-overlay';
   popup.id = 'ad-popup-' + taskId;
+  
   popup.innerHTML = `
     <div class="ad-popup-content">
       <button class="ad-close-btn" onclick="closeAdPopup('${taskId}')">×</button>
+      
       <div class="ad-popup-title">📺 Visit Website & Watch</div>
+      
       <div class="ad-task-info">
         <div style="color:var(--text-secondary);font-size:14px;margin-bottom:10px;">
           Task: <strong style="color:var(--text-primary);">${task.name}</strong>
@@ -2430,6 +2012,7 @@ function showAdPopup(task, taskId, link){
           🎁 Reward: ${task.reward} coins
         </div>
       </div>
+      
       <div class="ad-verification-status" id="verification-status-${taskId}">
         <div class="verification-item">
           <div class="verification-icon pending" id="verify-load-${taskId}">⏳</div>
@@ -2444,6 +2027,7 @@ function showAdPopup(task, taskId, link){
           <div class="verification-text" id="verify-time-text-${taskId}">Time: <span id="time-remaining-${taskId}">15s</span></div>
         </div>
       </div>
+      
       <div class="ad-container">
         <iframe 
           id="ad-iframe-${taskId}"
@@ -2452,9 +2036,11 @@ function showAdPopup(task, taskId, link){
           allowfullscreen>
         </iframe>
       </div>
+      
       <div class="ad-timer-display" id="timer-display-${taskId}">
         ⏳ Stay on page and interact for <span id="timer-${taskId}">15</span> seconds...
       </div>
+      
       <button id="complete-btn-${taskId}" disabled style="
         width:100%;padding:15px;background:#555;color:#fff;border:none;border-radius:10px;
         font-weight:700;font-size:16px;cursor:not-allowed;opacity:0.5;">
@@ -2462,8 +2048,11 @@ function showAdPopup(task, taskId, link){
       </button>
     </div>
   `;
+  
   document.body.appendChild(popup);
+  
   trackAdStart(taskId, task);
+  
   if(currentUser){
     db.ref('liveActivity/' + currentUser.uid).update({
       status: 'viewing_ad',
@@ -2472,16 +2061,19 @@ function showAdPopup(task, taskId, link){
       lastActivity: firebase.database.ServerValue.TIMESTAMP
     });
   }
+  
   let countdown = task.timer || 15;
   let tabSwitchCount = 0;
   let iframeLoaded = false;
   let userInteracted = false;
   let timeCompleted = false;
   const startTime = Date.now();
+  
   const iframe = document.getElementById('ad-iframe-' + taskId);
   const timerSpan = document.getElementById('timer-' + taskId);
   const completeBtn = document.getElementById('complete-btn-' + taskId);
   const closeBtn = popup.querySelector('.ad-close-btn');
+  
   iframe.onload = () => {
     iframeLoaded = true;
     document.getElementById('verify-load-' + taskId).className = 'verification-icon success';
@@ -2490,6 +2082,7 @@ function showAdPopup(task, taskId, link){
     document.getElementById('verify-load-text-' + taskId).innerText = 'Website loaded';
     checkVerification();
   };
+  
   setTimeout(() => {
     if(!iframeLoaded){
       document.getElementById('verify-load-' + taskId).className = 'verification-icon failed';
@@ -2499,6 +2092,7 @@ function showAdPopup(task, taskId, link){
       completeBtn.innerText = '❌ Website not loaded';
     }
   }, 10000);
+  
   iframe.addEventListener('mouseenter', () => {
     if(!userInteracted){
       userInteracted = true;
@@ -2509,6 +2103,7 @@ function showAdPopup(task, taskId, link){
       checkVerification();
     }
   });
+  
   window.addEventListener('blur', () => {
     setTimeout(() => {
       if(document.activeElement === iframe && !userInteracted){
@@ -2521,6 +2116,7 @@ function showAdPopup(task, taskId, link){
       }
     }, 100);
   });
+  
   const visibilityHandler = () => {
     if(document.hidden){
       tabSwitchCount++;
@@ -2532,15 +2128,20 @@ function showAdPopup(task, taskId, link){
       }
     }
   };
+  
   document.addEventListener('visibilitychange', visibilityHandler);
+  
   const interval = setInterval(() => {
     countdown--;
     timerSpan.innerText = countdown;
+    
     const timeRemaining = document.getElementById('time-remaining-' + taskId);
     if(timeRemaining) timeRemaining.innerText = countdown + 's';
+    
     if(countdown <= 0){
       clearInterval(interval);
       document.removeEventListener('visibilitychange', visibilityHandler);
+      
       timeCompleted = true;
       document.getElementById('verify-time-' + taskId).className = 'verification-icon success';
       document.getElementById('verify-time-' + taskId).innerText = '✓';
@@ -2549,18 +2150,23 @@ function showAdPopup(task, taskId, link){
       checkVerification();
     }
   }, 1000);
+  
   function checkVerification(){
     if(iframeLoaded && userInteracted && timeCompleted && tabSwitchCount <= 3){
       const duration = (Date.now() - startTime) / 1000;
+      
       completeBtn.disabled = false;
       completeBtn.style.background = 'linear-gradient(135deg, var(--green) 0%, #27ae60 100%)';
       completeBtn.style.cursor = 'pointer';
       completeBtn.style.opacity = '1';
       completeBtn.innerText = '✅ Claim Your Reward';
+      
       closeBtn.style.display = 'block';
+      
       document.getElementById('timer-display-' + taskId).innerHTML = '<span style="color:var(--green);font-size:16px;">🎉 All requirements completed!</span>';
       document.getElementById('verification-status-' + taskId).style.borderLeftColor = 'var(--green)';
       document.getElementById('verification-status-' + taskId).style.background = 'rgba(46,204,113,0.1)';
+      
       completeBtn.onclick = () => {
         trackAdComplete(taskId, task, duration, tabSwitchCount);
         popup.remove();
@@ -2569,15 +2175,18 @@ function showAdPopup(task, taskId, link){
     }
   }
 }
+
 function closeAdPopup(taskId){
   if(confirm('Close? You will not get reward.')){
     const popup = document.getElementById('ad-popup-' + taskId);
     if(popup) popup.remove();
+    
     if(currentUser){
       db.ref('liveActivity/' + currentUser.uid).update({status: 'online', location: 'dashboard', currentTask: null});
     }
   }
 }
+
 function trackAdStart(taskId, task){
   if(!currentUser) return;
   db.ref('adTracking/' + currentUser.uid + '/' + taskId).push({
@@ -2587,10 +2196,13 @@ function trackAdStart(taskId, task){
     date: new Date().toLocaleString()
   });
 }
+
 function trackAdComplete(taskId, task, duration, tabSwitches){
   if(!currentUser) return;
+  
   const uid = currentUser.uid;
   const valid = tabSwitches <= 3 && duration >= 15;
+  
   db.ref('adTracking/' + uid + '/' + taskId).push({
     action: 'complete',
     taskName: task.name,
@@ -2600,6 +2212,7 @@ function trackAdComplete(taskId, task, duration, tabSwitches){
     timestamp: Date.now(),
     date: new Date().toLocaleString()
   });
+  
   db.ref('users/' + uid + '/adsViewed').transaction(current => (current || 0) + 1);
   db.ref('liveActivity/' + uid).update({
     status: 'online',
@@ -2608,30 +2221,39 @@ function trackAdComplete(taskId, task, duration, tabSwitches){
     totalAdsViewed: firebase.database.ServerValue.increment(1)
   });
 }
+
 function completeTaskWithVerification(taskId, tabSwitches){
   if(!currentUser) return;
+  
   const uid = currentUser.uid;
+  
   if(completedTasks[taskId]){
     alert('⚠️ Already completed!');
     return;
   }
+  
   if(tabSwitches > 3){
     alert('⚠️ Too many tab switches!');
     db.ref('users/' + uid).update({isSuspicious: true});
     return;
   }
+  
   db.ref('tasks/' + taskId).once('value').then(taskSnap => {
     const task = taskSnap.val();
     if(!task) {
       alert('❌ Task not found!');
       return;
     }
+    
     const reward = task.reward || 0;
+    
     return db.ref('users/' + uid).once('value').then(userSnap => {
       const userData = userSnap.val();
+      
       const newBalance = (userData.balance || 0) + reward;
       const newTotalEarned = (userData.totalEarned || 0) + reward;
       const updatedCompletedTasks = userData.completedTasks || {};
+      
       updatedCompletedTasks[taskId] = {
         completedAt: Date.now(),
         reward: reward,
@@ -2640,6 +2262,7 @@ function completeTaskWithVerification(taskId, tabSwitches){
         adViewed: true,
         tabSwitches: tabSwitches
       };
+      
       return db.ref('users/' + uid).update({
         balance: newBalance,
         totalEarned: newTotalEarned,
@@ -2654,6 +2277,7 @@ function completeTaskWithVerification(taskId, tabSwitches){
     alert('❌ Failed!');
   });
 }
+
 function showSuccessAnimation(reward){
   const overlay = document.createElement('div');
   overlay.className = 'success-overlay';
@@ -2670,17 +2294,21 @@ function showSuccessAnimation(reward){
     setTimeout(() => overlay.remove(), 300);
   }, 2000);
 }
+
 function loadTasks(){
   db.ref('tasks').once('value').then(snapshot => {
     const tasks = snapshot.val();
     const container = document.getElementById('tasks-list');
     container.innerHTML = '';
+    
     if(!tasks){
       container.innerHTML = '<p style="text-align:center;color:#999;padding:20px;">No tasks</p>';
       return;
     }
+    
     Object.entries(tasks).forEach(([key, t]) => {
       const isCompleted = completedTasks[key];
+      
       const div = document.createElement('div');
       div.className = 'task-box' + (isCompleted ? ' completed' : '');
       div.innerHTML = `
@@ -2700,33 +2328,39 @@ function loadTasks(){
   });
 }
 
-// =====================================================
-// LEADERBOARD
-// =====================================================
 function loadLeaderboard(){
   const container = document.getElementById('leaderboard-list');
   container.innerHTML = '<div style="text-align:center;padding:40px;"><div style="font-size:50px;animation:spin 2s linear infinite;">⏳</div><div>Loading...</div></div>';
+  
   db.ref('users').once('value').then(snapshot => {
     const users = [];
+    
     snapshot.forEach(childSnapshot => {
       const user = childSnapshot.val();
       const uid = childSnapshot.key;
+      
       if(user && user.totalEarned && user.totalEarned > 0){
         users.push({uid: uid, name: user.name || 'User', totalEarned: user.totalEarned || 0});
       }
     });
+    
     users.sort((a, b) => b.totalEarned - a.totalEarned);
+    
     container.innerHTML = '';
+    
     if(users.length === 0){
       container.innerHTML = '<div style="text-align:center;padding:50px;"><div style="font-size:80px;">🏆</div><h3>No Rankings</h3></div>';
       return;
     }
+    
     users.forEach((user, index) => {
       const rank = index + 1;
       const isCurrentUser = currentUser && user.uid === currentUser.uid;
+      
       let rankBadgeContent = '#' + rank;
       let rankClass = '';
       let itemClass = '';
+      
       if(rank === 1){
         rankBadgeContent = '🥇';
         rankClass = 'gold';
@@ -2740,7 +2374,9 @@ function loadLeaderboard(){
         rankClass = 'bronze';
         itemClass = 'top3';
       }
+      
       if(isCurrentUser) itemClass += ' current-user';
+      
       const div = document.createElement('div');
       div.className = 'leaderboard-item ' + itemClass;
       div.innerHTML = `
@@ -2760,11 +2396,9 @@ function loadLeaderboard(){
   });
 }
 
-// =====================================================
-// PROFILE & CHAT
-// =====================================================
 function loadProfileSettings(){
   if(!userData) return;
+  
   document.getElementById('profile-name').innerText = userData.name || 'N/A';
   document.getElementById('profile-phone').innerText = userData.phone || 'N/A';
   document.getElementById('profile-email').innerText = userData.email || 'N/A';
@@ -2775,18 +2409,24 @@ function loadProfileSettings(){
   document.getElementById('profile-withdrawn').innerText = (userData.totalWithdrawn || 0) + ' coins';
   document.getElementById('profile-ads-viewed').innerText = userData.adsViewed || 0;
 }
+
 function loadChat(){
   if(!currentUser) return;
+  
   const uid = currentUser.uid;
   const messagesContainer = document.getElementById('chat-messages');
+  
   db.ref('chats/' + uid).on('value', snapshot => {
     messagesContainer.innerHTML = '';
+    
     if(!snapshot.exists()){
       messagesContainer.innerHTML = '<div style="text-align:center;padding:40px;"><div style="font-size:48px;">💬</div><div>No messages</div></div>';
       return;
     }
+    
     snapshot.forEach(childSnapshot => {
       const msg = childSnapshot.val();
+      
       const div = document.createElement('div');
       div.className = 'chat-message ' + msg.sender;
       div.innerHTML = `
@@ -2795,14 +2435,19 @@ function loadChat(){
       `;
       messagesContainer.appendChild(div);
     });
+    
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   });
 }
+
 function sendMessage(){
   if(!currentUser) return;
+  
   const input = document.getElementById('chat-input');
   const message = input.value.trim();
+  
   if(!message) return;
+  
   db.ref('chats/' + currentUser.uid).push({
     sender: 'user',
     message: message,
@@ -2815,15 +2460,13 @@ function sendMessage(){
   });
 }
 
-// =====================================================
-// AUTH
-// =====================================================
 function toggleAuthMode(){
   isSignupMode = !isSignupMode;
   const signupFields = document.getElementById('signup-fields');
   const authTitle = document.getElementById('auth-title');
   const authBtn = document.getElementById('auth-btn');
   const toggleText = document.getElementById('toggle-auth');
+  
   if(isSignupMode){
     signupFields.style.display = 'block';
     authTitle.innerText = 'Sign Up';
@@ -2837,34 +2480,44 @@ function toggleAuthMode(){
   }
   clearError('auth-error');
 }
+
 function handleAuth(){
   if(isSignupMode) signup();
   else login();
 }
+
 async function signup(){
   const name = document.getElementById('signup-name').value.trim();
   const phone = document.getElementById('signup-phone').value.trim();
   const email = document.getElementById('auth-email').value.trim();
   const password = document.getElementById('auth-password').value;
   const referCode = document.getElementById('signup-refer').value.trim();
+  
   clearError('auth-error');
+  
   if(!name || !phone || !email || !password){ 
     showError('auth-error', 'Fill all required fields');
     return; 
   }
+  
   if(password.length < 6){
     showError('auth-error', 'Password min 6 chars');
     return;
   }
+  
   if(!/^01[0-9]{9}$/.test(phone)){
     showError('auth-error', 'Valid phone (11 digits)');
     return;
   }
+  
   try {
     showError('auth-error', '⏳ Creating account...');
+    
     if(!deviceFingerprint || !userIP) await initializeDeviceDetection();
+    
     const cred = await auth.createUserWithEmailAndPassword(email, password);
     currentUser = cred.user;
+    
     await db.ref('users/'+currentUser.uid).set({
       name: name,
       phone: phone,
@@ -2886,9 +2539,11 @@ async function signup(){
       isBlocked: false,
       isSuspicious: false
     });
+    
     if(referCode){
       await processReferral(referCode, currentUser.uid);
     }
+    
     clearError('auth-error');
   } catch(err) {
     if(err.code === 'auth/email-already-in-use'){
@@ -2898,15 +2553,20 @@ async function signup(){
     }
   }
 }
+
 function login(){
   const email = document.getElementById('auth-email').value.trim();
   const password = document.getElementById('auth-password').value;
+  
   clearError('auth-error');
+  
   if(!email || !password){
     showError('auth-error', 'Enter email and password');
     return;
   }
+  
   showError('auth-error', '⏳ Logging in...');
+  
   auth.signInWithEmailAndPassword(email, password)
     .then(cred => {
       currentUser = cred.user;
@@ -2916,6 +2576,7 @@ function login(){
       showError('auth-error', '❌ Invalid credentials');
     });
 }
+
 function logout(){
   if(confirm('Logout?')){
     auth.signOut().then(()=>{
@@ -2925,41 +2586,49 @@ function logout(){
   }
 }
 
-// =====================================================
-// WITHDRAW
-// =====================================================
 function selectMethod(method){
   selectedWithdrawMethod = method;
   document.querySelectorAll('.method-btn').forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById('withdraw-method').value = method;
 }
+
 function submitWithdraw(){
   const method = document.getElementById('withdraw-method').value.trim();
   const account = document.getElementById('withdraw-account').value.trim();
   const bdtInput = document.getElementById('withdraw-amount').value;
+  
   clearError('withdraw-error');
   clearError('withdraw-success');
+  
   if(!currentUser || !method || !account){
     showError('withdraw-error', '⚠️ Fill all fields');
     return;
   }
+  
   const bdtAmount = parseInt(bdtInput);
+  
   if(!bdtInput || isNaN(bdtAmount) || bdtAmount < minWithdrawBDT){
     showError('withdraw-error', `⚠️ Min ${minWithdrawBDT} ৳ withdraw`);
     return;
   }
+  
   const requiredCoins = bdtToCoins(bdtAmount);
+  
   if(requiredCoins > userBalance){
     const availableBDT = coinsToBDT(userBalance);
     showError('withdraw-error', `⚠️ Insufficient balance. You have ${userBalance} coins (${availableBDT} ৳)`);
     return;
   }
+  
   if(!confirm(`Withdraw ${bdtAmount} ৳ (${requiredCoins} coins)?`)) return;
+  
   const submitBtn = document.getElementById('withdraw-submit-btn');
   submitBtn.disabled = true;
   submitBtn.innerText = '⏳ Processing...';
+  
   const uid = currentUser.uid;
+  
   const withdrawData = {
     uid: uid,
     userID: userData.userID || 'N/A',
@@ -2973,11 +2642,12 @@ function submitWithdraw(){
     conversionRate: conversionRate,
     status: 'pending',
     requestedAt: Date.now(),
-    date: new Date().toLocaleString(),
-    source: 'main_wallet'
+    date: new Date().toLocaleString()
   };
+  
   const newBalance = userBalance - requiredCoins;
   const newPending = (userData.pendingWithdraw || 0) + requiredCoins;
+  
   db.ref('users/' + uid).update({balance: newBalance, pendingWithdraw: newPending})
   .then(() => db.ref('withdraw_requests').push(withdrawData))
   .then(() => {
@@ -3000,182 +2670,30 @@ function submitWithdraw(){
   });
 }
 
-// =====================================================
-// GAME WALLET FUNCTIONS
-// =====================================================
-function showGameWalletTransfer(direction){
-  showSection('wallet-section');
-  if(direction === 'toMain'){
-    selectTransferOption('gameToMain');
-  } else {
-    selectTransferOption('mainToGame');
-  }
-}
-
-function showGameWalletWithdraw(){
-  const method = document.getElementById('withdraw-method').value.trim();
-  const account = document.getElementById('withdraw-account').value.trim();
-  clearError('withdraw-error');
-  clearError('withdraw-success');
-  
-  if(slotWalletBalance <= 0){
-    showError('withdraw-error', '⚠️ No coins in game wallet');
-    return;
-  }
-  
-  if(!currentUser || !method || !account){
-    showError('withdraw-error', '⚠️ Fill all fields for game wallet withdraw');
-    return;
-  }
-  
-  if(!confirm(`Withdraw ${slotWalletBalance} coins (${coinsToBDT(slotWalletBalance)} ৳) from game wallet?`)) return;
-  
-  const submitBtn = document.getElementById('withdraw-submit-btn');
-  submitBtn.disabled = true;
-  submitBtn.innerText = '⏳ Processing...';
-  
-  const uid = currentUser.uid;
-  const bdtAmount = coinsToBDT(slotWalletBalance);
-  const withdrawData = {
-    uid: uid,
-    userID: userData.userID || 'N/A',
-    userName: userData.name || 'Unknown',
-    userPhone: userData.phone || 'N/A',
-    userEmail: userData.email || currentUser.email || 'N/A',
-    method: method,
-    account: account,
-    coinAmount: slotWalletBalance,
-    bdtAmount: bdtAmount,
-    conversionRate: conversionRate,
-    status: 'pending',
-    requestedAt: Date.now(),
-    date: new Date().toLocaleString(),
-    source: 'game_wallet'
-  };
-  
-  // Update game wallet balance and user pending withdraw
-  db.ref(`gameWallets/${uid}/balance`).set(0);
-  db.ref(`users/${uid}/pendingWithdraw`).transaction(current => (current || 0) + slotWalletBalance)
-    .then(() => db.ref('withdraw_requests').push(withdrawData))
-    .then(() => {
-      showSuccess('withdraw-success', `✅ Game wallet withdraw request submitted! You will receive ${bdtAmount} ৳`);
-      submitBtn.disabled = false;
-      submitBtn.innerText = '💸 Request Withdraw';
-      setTimeout(() => {
-        clearError('withdraw-success');
-        showSection('dashboard');
-      }, 3000);
-    })
-    .catch(error => {
-      showError('withdraw-error', '❌ Failed to process game wallet withdraw');
-      submitBtn.disabled = false;
-      submitBtn.innerText = '💸 Request Withdraw';
-    });
-}
-
-function selectTransferOption(option){
-  currentTransferOption = option;
-  
-  // Update UI
-  document.querySelectorAll('.transfer-option').forEach(opt => opt.classList.remove('active'));
-  if(option === 'mainToGame'){
-    document.getElementById('transfer-main-to-game').classList.add('active');
-    document.getElementById('transfer-details').innerText = `Max: ${userBalance} coins from Main Wallet`;
-  } else {
-    document.getElementById('transfer-game-to-main').classList.add('active');
-    document.getElementById('transfer-details').innerText = `Max: ${slotWalletBalance} coins from Game Wallet`;
-  }
-}
-
-function executeTransfer(){
-  const amount = parseInt(document.getElementById('transfer-amount').value);
-  clearError('transfer-error');
-  clearError('transfer-success');
-  
-  if(isNaN(amount) || amount <= 0){
-    showError('transfer-error', 'Enter a valid amount');
-    return;
-  }
-  
-  if(currentTransferOption === 'mainToGame'){
-    if(amount > userBalance){
-      showError('transfer-error', 'Insufficient main balance');
-      return;
-    }
-    
-    const updates = {};
-    updates[`gameWallets/${currentUser.uid}/balance`] = (slotWalletBalance || 0) + amount;
-    updates[`users/${currentUser.uid}/balance`] = userBalance - amount;
-    
-    db.ref().update(updates).then(()=>{
-      showSuccess('transfer-success', `✅ Transferred ${amount} coins to Game Wallet`);
-      document.getElementById('transfer-amount').value = '';
-      addGameWalletTransaction('transfer_in', amount, 'Main Wallet');
-    }).catch(()=>{
-      showError('transfer-error', '❌ Transfer failed');
-    });
-    
-  } else {
-    if(amount > (slotWalletBalance || 0)){
-      showError('transfer-error', 'Insufficient game wallet balance');
-      return;
-    }
-    
-    const updates = {};
-    updates[`gameWallets/${currentUser.uid}/balance`] = (slotWalletBalance || 0) - amount;
-    updates[`users/${currentUser.uid}/balance`] = userBalance + amount;
-    
-    db.ref().update(updates).then(()=>{
-      showSuccess('transfer-success', `✅ Transferred ${amount} coins to Main Wallet`);
-      document.getElementById('transfer-amount').value = '';
-      addGameWalletTransaction('transfer_out', amount, 'Main Wallet');
-    }).catch(()=>{
-      showError('transfer-error', '❌ Transfer failed');
-    });
-  }
-}
-
-function addGameWalletTransaction(type, amount, description){
-  if(!currentUser) return;
-  
-  const transaction = {
-    type: type,
-    amount: amount,
-    description: description,
-    timestamp: Date.now(),
-    date: new Date().toLocaleString()
-  };
-  
-  db.ref(`gameWalletTransactions/${currentUser.uid}`).push(transaction);
-}
-
-// =====================================================
-// WALLET & NOTIFICATIONS
-// =====================================================
 function loadWalletPage(){
   document.getElementById('wallet-current-balance').innerText = userBalance;
   document.getElementById('wallet-total-earned').innerText = userData.totalEarned || 0;
   document.getElementById('wallet-withdrawn').innerText = userData.totalWithdrawn || 0;
   document.getElementById('wallet-pending').innerText = userData.pendingWithdraw || 0;
-  document.getElementById('wallet-game-balance').innerText = slotWalletBalance || 0;
-  
-  // Update transfer amounts
-  document.getElementById('main-to-game-amount').innerText = userBalance;
-  document.getElementById('game-to-main-amount').innerText = slotWalletBalance || 0;
 }
+
 function loadNotifications(){
   if(!currentUser) return;
+  
   db.ref('notifications/' + currentUser.uid).on('value', snapshot => {
     const container = document.getElementById('notifications-list');
     container.innerHTML = '';
+    
     let unreadCount = 0;
     const notifications = [];
+    
     snapshot.forEach(childSnapshot => {
       const notif = childSnapshot.val();
       notif.key = childSnapshot.key;
       notifications.push(notif);
       if(!notif.read) unreadCount++;
     });
+    
     const countElem = document.getElementById('notification-count');
     if(unreadCount > 0){
       countElem.innerText = unreadCount;
@@ -3183,11 +2701,14 @@ function loadNotifications(){
     } else {
       countElem.style.display = 'none';
     }
+    
     if(notifications.length === 0){
       container.innerHTML = '<div style="text-align:center;padding:20px;">No notifications</div>';
       return;
     }
+    
     notifications.sort((a, b) => b.timestamp - a.timestamp);
+    
     notifications.forEach(notif => {
       const div = document.createElement('div');
       div.className = 'notification-item' + (!notif.read ? ' unread' : '');
@@ -3205,14 +2726,18 @@ function loadNotifications(){
     });
   });
 }
+
 function loadUserProfile(){
   if(!currentUser) return;
+  
   db.ref('users/'+currentUser.uid).on('value', snapshot=>{
     const data = snapshot.val();
     if(!data) return;
+    
     userData = data;
     userBalance = data.balance || 0;
     completedTasks = data.completedTasks || {};
+    
     document.getElementById('user-name').innerText = data.name;
     document.getElementById('user-phone').innerText = '📱 ' + data.phone;
     document.getElementById('user-uid').innerText = '🆔 ' + data.userID;
@@ -3220,384 +2745,13 @@ function loadUserProfile(){
     updateWithdrawDisplay();
   });
 }
+
 function loadNotice(){
   db.ref('notice_board/text').on('value', snap=>{
     document.getElementById('notice-text').innerText = snap.val() || 'Welcome!';
   });
 }
 
-// =====================================================
-// SLOT MACHINE JS - ENHANCED WITH ADMIN WIN CONTROL & FASTER SPINNING
-// =====================================================
-function loadSlotSettings(){
-  db.ref('settings/slot').on('value', snap => {
-    const v = snap.val();
-    if(v){
-      slotSettings = {
-        enabledDays: Array.isArray(v.enabledDays) ? v.enabledDays : [5],
-        spinCost: v.spinCost ?? 10,
-        minDeposit: v.minDeposit ?? 50,
-        virtualNumbers: v.virtualNumbers || slotSettings.virtualNumbers
-      };
-    }
-    initSlotRound();
-    loadUserWinRate();
-    refreshSlotUI();
-  });
-}
-function loadUserWinRate(){
-  if(!currentUser) return;
-  // Load admin-controlled win rate for this user
-  db.ref(`slotWinRates/${currentUser.uid}`).on('value', snap => {
-    const rate = snap.val();
-    if(rate && typeof rate.rate === 'number'){
-      userWinRate = rate.rate; // 0-100 percentage
-    } else {
-      userWinRate = 15; // default 15%
-    }
-    console.log(`User win rate: ${userWinRate}%`);
-  });
-}
-function initSlotRound(){
-  const now = new Date();
-  const day = now.getDay();
-  const dateStr = now.toISOString().slice(0,10);
-  const enabledToday = slotSettings.enabledDays.includes(day);
-  let startAt = null, endAt = null, id = null;
-
-  if(enabledToday){
-    startAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0,0,0,0).getTime();
-    endAt = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23,59,59,999).getTime();
-    id = `SRV-${dateStr}`;
-  } else {
-    // find next enabled day
-    let next = (day + 1) % 7, count = 1;
-    while(!slotSettings.enabledDays.includes(next) && count <= 7){ next = (next+1)%7; count++; }
-    const nextDate = new Date(now);
-    nextDate.setDate(now.getDate() + count);
-    startAt = new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate(), 0,0,0,0).getTime();
-    endAt = new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate(), 23,59,59,999).getTime();
-    id = `SRV-${nextDate.toISOString().slice(0,10)}`;
-  }
-
-  currentSlotRound = { id, dateStr: id.split('-')[1], day: enabledToday ? day : new Date(startAt).getDay(), startAt, endAt };
-  db.ref(`slotRounds/${id}`).update({ id, dateStr: id.split('-')[1], day: currentSlotRound.day, startAt, endAt });
-}
-function refreshSlotUI(){
-  if(!currentSlotRound) return;
-  const now = Date.now();
-  const allowed = now >= currentSlotRound.startAt && now <= currentSlotRound.endAt;
-
-  const statusBadge = document.getElementById('slot-status-badge');
-  const spinBtn = document.getElementById('spin-btn');
-  statusBadge.className = 'slot-badge ' + (allowed ? 'ok' : 'no');
-  statusBadge.innerText = allowed ? 'Open Now' : 'Closed';
-
-  document.getElementById('slot-spin-cost').innerText = slotSettings.spinCost;
-  document.getElementById('slot-round-id').innerText = currentSlotRound.id;
-  document.getElementById('slot-next-round').innerText = new Date(currentSlotRound.endAt).toLocaleDateString();
-
-  spinBtn.disabled = !allowed || isSpinning;
-  spinBtn.innerText = allowed ? '🎯 Spin Now' : '🔒 Not Available';
-
-  document.getElementById('slot-msg').innerText = allowed ? 'Spin and test your luck!' : 'Slot game is available only on Friday.';
-
-  // Load Game Wallet balance
-  loadGameWallet();
-  // Load history
-  loadSpinHistory();
-}
-function loadGameWallet(){
-  if(!currentUser) return;
-  db.ref(`gameWallets/${currentUser.uid}/balance`).on('value', snap=>{
-    slotWalletBalance = snap.val() || 0;
-    document.getElementById('slot-wallet-balance').innerText = slotWalletBalance;
-    document.getElementById('game-wallet-display').innerText = `${slotWalletBalance} coins in game wallet.`;
-    document.getElementById('game-wallet-balance').innerText = `${slotWalletBalance} coins`;
-    // Update Wallet page
-    document.getElementById('wallet-game-balance').innerText = slotWalletBalance;
-    document.getElementById('game-to-main-amount').innerText = slotWalletBalance;
-  });
-}
-
-// NEW: Deposit from main balance to game wallet
-function depositToGameWallet(){
-  if(!currentUser) {
-    alert('Please login first');
-    return;
-  }
-  
-  const amount = parseInt(document.getElementById('deposit-amount').value);
-  if(!amount || amount < 1){
-    alert('Please enter a valid amount');
-    return;
-  }
-  
-  if(amount > userBalance){
-    alert('Insufficient main balance');
-    return;
-  }
-  
-  // Confirm deposit
-  if(!confirm(`Transfer ${amount} coins from main balance to game wallet?`)){
-    return;
-  }
-  
-  // Update both balances atomically
-  const updates = {};
-  updates[`gameWallets/${currentUser.uid}/balance`] = (slotWalletBalance || 0) + amount;
-  updates[`users/${currentUser.uid}/balance`] = userBalance - amount;
-  
-  db.ref().update(updates).then(() => {
-    alert(`✅ Successfully deposited ${amount} coins to game wallet!`);
-    document.getElementById('deposit-amount').value = '';
-    addGameWalletTransaction('deposit', amount, 'Main Wallet');
-  }).catch(error => {
-    console.error('Deposit failed:', error);
-    alert('❌ Deposit failed. Please try again.');
-  });
-}
-
-function startSpin(){
-  if(isSpinning) return;
-  
-  if(!currentUser || !currentSlotRound) {
-    alert('System not ready');
-    return;
-  }
-  const now = Date.now();
-  if(!(now >= currentSlotRound.startAt && now <= currentSlotRound.endAt)){
-    alert('Not available now.');
-    return;
-  }
-  if(slotWalletBalance < slotSettings.spinCost){
-    alert('Insufficient game wallet balance. Please deposit from main balance.');
-    return;
-  }
-
-  isSpinning = true;
-  document.getElementById('spin-btn').disabled = true;
-  document.getElementById('spin-btn').innerText = '⏳ Spinning...';
-  document.getElementById('slot-msg').innerText = 'Spinning the reels...';
-
-  const reels = [document.getElementById('reel-1'), document.getElementById('reel-2'), document.getElementById('reel-3')];
-  reels.forEach(r => { r.classList.add('spinning'); r.textContent = '🌀'; });
-
-  // Deduct cost immediately
-  db.ref(`gameWallets/${currentUser.uid}/balance`).transaction(cur => (cur||0) - slotSettings.spinCost);
-
-  // Create spin record
-  const spinId = `spin-${currentSlotRound.id}-${currentUser.uid}-${Date.now()}`;
-  const spinData = {
-    id: spinId,
-    roundId: currentSlotRound.id,
-    uid: currentUser.uid,
-    userName: userData?.name || 'User',
-    status: 'spinning',
-    timestamp: Date.now(),
-    cost: slotSettings.spinCost,
-    winRate: userWinRate // Track the win rate used
-  };
-
-  db.ref(`slotSpins/${currentSlotRound.id}/${spinId}`).set(spinData).then(() => {
-    // Faster spinning time - 2 seconds instead of 3
-    setTimeout(() => {
-      // Generate result with admin-controlled win rate
-      const result = generateSpinResultWithWinRate(userWinRate);
-      const isWin = checkWin(result);
-      const payout = isWin ? slotSettings.spinCost * 5 : 0; // 5x payout for win
-      
-      // Update spin record
-      db.ref(`slotSpins/${currentSlotRound.id}/${spinId}`).update({
-        status: 'done',
-        result: result,
-        win: isWin,
-        payout: payout
-      });
-
-      // Show result with faster animation
-      showSpinResult(result, isWin, payout);
-      
-      // Credit if win
-      if(isWin && payout > 0){
-        db.ref(`gameWallets/${currentUser.uid}/balance`).transaction(cur => (cur||0) + payout);
-        addGameWalletTransaction('win', payout, 'Slot Machine');
-      }
-
-      isSpinning = false;
-      refreshSlotUI();
-    }, 2000); // 2 second spin animation
-  });
-}
-function generateSpinResultWithWinRate(winRate){
-  // winRate is percentage (0-100)
-  const winChance = winRate / 100;
-  const random = Math.random();
-  
-  if(random < winChance) {
-    // Win - all same symbol
-    const symbol = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-    return [symbol, symbol, symbol];
-  } else {
-    // Lose - random different symbols
-    const symbol1 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-    let symbol2, symbol3;
-    do {
-      symbol2 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-    } while(symbol2 === symbol1);
-    do {
-      symbol3 = SLOT_SYMBOLS[Math.floor(Math.random() * SLOT_SYMBOLS.length)];
-    } while(symbol3 === symbol1 || symbol3 === symbol2);
-    return [symbol1, symbol2, symbol3];
-  }
-}
-function checkWin(result){
-  return result[0] === result[1] && result[1] === result[2];
-}
-function showSpinResult(result, isWin, payout){
-  const reels = [document.getElementById('reel-1'), document.getElementById('reel-2'), document.getElementById('reel-3')];
-  
-  // Faster result display - staggered timing
-  setTimeout(() => {
-    reels[0].classList.remove('spinning'); 
-    reels[0].textContent = result[0];
-    reels[0].style.transform = 'scale(1.1)';
-  }, 200);
-  
-  setTimeout(() => {
-    reels[1].classList.remove('spinning'); 
-    reels[1].textContent = result[1];
-    reels[1].style.transform = 'scale(1.1)';
-  }, 400);
-  
-  setTimeout(() => {
-    reels[2].classList.remove('spinning'); 
-    reels[2].textContent = result[2];
-    reels[2].style.transform = 'scale(1.1)';
-    // Reset scale after animation
-    setTimeout(() => {
-      reels.forEach(r => r.style.transform = 'scale(1)');
-    }, 300);
-  }, 600);
-
-  document.getElementById('slot-last-result').innerText = `${result[0]} ${result[1]} ${result[2]}  ${isWin ? '-> WIN' : '-> LOSE'}`;
-  
-  if(isWin){
-    document.getElementById('slot-msg').innerText = `🎉 You won ${payout} coins!`;
-    showSuccessAnimation(payout);
-  } else {
-    document.getElementById('slot-msg').innerText = 'Try again!';
-  }
-  
-  loadSpinHistory();
-}
-function loadSpinHistory(){
-  if(!currentUser || !currentSlotRound) return;
-  const list = document.getElementById('slot-history-list');
-  db.ref(`slotSpins/${currentSlotRound.id}`).orderByChild('timestamp').limitToLast(10)
-    .once('value').then(snap=>{
-      const items = [];
-      snap.forEach(child=>{
-        const s = child.val();
-        if(s.uid === currentUser.uid) items.push(s);
-      });
-      items.sort((a,b)=>b.timestamp-a.timestamp);
-      if(items.length === 0){
-        list.innerHTML = 'No spins yet';
-        return;
-      }
-      list.innerHTML = '';
-      items.forEach(s=>{
-        const isWin = !!s.win;
-        const [a,b,c] = s.result || ['-','-','-'];
-        const el = document.createElement('div');
-        el.className = 'hist-item';
-        el.innerHTML = `
-          <div class="hist-left">
-            <div class="hist-badge">${isWin ? '🏆' : '🎲'}</div>
-            <div>
-              <div><strong>${a} ${b} ${c}</strong></div>
-              <div class="hist-time">${new Date(s.timestamp).toLocaleString()}</div>
-            </div>
-          </div>
-          <div class="${isWin ? 'hist-win' : 'hist-lose'}">
-            ${isWin ? `+${s.payout} coins` : `-${s.cost} coins`}
-          </div>
-        `;
-        list.appendChild(el);
-      });
-    });
-}
-
-// =====================================================
-// LIVE TRADING
-// =====================================================
-function initTradingChart(){
-  const ctx = document.getElementById('priceChart').getContext('2d');
-  tradingChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [{
-        label: 'Coins per ৳',
-        data: [],
-        borderColor: '#ffd700',
-        backgroundColor: 'rgba(255,215,0,0.15)',
-        fill: true,
-        tension: 0.25,
-        pointRadius: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        x: { ticks: { color: '#bbb', maxTicksLimit: 5 } },
-        y: { ticks: { color: '#bbb' }, grid: { color: 'rgba(255,255,255,0.05)'} }
-      }
-    }
-  });
-}
-function startPriceListener(){
-  db.ref('settings/liveTrading/price').on('value', snap => {
-    const price = snap.val();
-    if(typeof price === 'number' && isFinite(price)){
-      const now = Date.now();
-      priceHistory.push({t: now, v: price});
-      if(priceHistory.length > 60) priceHistory.shift();
-      renderPrice();
-    }
-  });
-}
-function renderPrice(){
-  const last = priceHistory[priceHistory.length - 1];
-  const first = priceHistory[0];
-  const priceElem = document.getElementById('trading-price');
-  const changeElem = document.getElementById('trading-change');
-  if(last){
-    priceElem.textContent = last.v.toFixed(2);
-    if(first && first !== last){
-      const diff = last.v - first.v;
-      changeElem.textContent = (diff >= 0 ? '▲ +' : '▼ ') + diff.toFixed(2);
-      changeElem.classList.toggle('up', diff >= 0);
-      changeElem.classList.toggle('down', diff < 0);
-    } else {
-      changeElem.textContent = '-';
-    }
-  }
-  if(tradingChart){
-    tradingChart.data.labels = priceHistory.map(p => new Date(p.t).toLocaleTimeString());
-    tradingChart.data.datasets[0].data = priceHistory.map(p => p.v);
-    tradingChart.update();
-  }
-}
-
-// =====================================================
-// MISC
-// =====================================================
 function showError(id, msg){
   const elem = document.getElementById(id);
   if(elem){
@@ -3605,6 +2759,7 @@ function showError(id, msg){
     elem.style.display = 'block';
   }
 }
+
 function clearError(id){
   const elem = document.getElementById(id);
   if(elem){
@@ -3612,6 +2767,7 @@ function clearError(id){
     elem.style.display = 'none';
   }
 }
+
 function showSuccess(id, msg){
   const elem = document.getElementById(id);
   if(elem){
@@ -3619,39 +2775,37 @@ function showSuccess(id, msg){
     elem.style.display = 'block';
   }
 }
+
 function showSection(section){
   document.getElementById('dashboard-content').style.display = 'none';
   document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.querySelectorAll('.menu-list li').forEach(li => li.classList.remove('active'));
+  
   if(section === 'dashboard'){
     document.getElementById('dashboard-content').style.display = 'block';
   } else {
     document.getElementById(section).style.display = 'block';
+    
     if(section === 'wallet-section') loadWalletPage();
     else if(section === 'leaderboard-section') loadLeaderboard();
     else if(section === 'profile-section') loadProfileSettings();
     else if(section === 'chat-section') loadChat();
     else if(section === 'refer-section') loadReferralList();
-    else if(section === 'trading-section') {
-      if(!tradingChart) initTradingChart();
-      startPriceListener();
-      renderPrice(); // যদি ইতিমধ্যে ডেটা থাকে দেখাতে
-    }
   }
+  
   closeMenu();
 }
+
 function openMenu(){
   document.getElementById('side-menu').classList.add('open');
   document.querySelector('.menu-bg').style.display='block';
 }
+
 function closeMenu(){
   document.getElementById('side-menu').classList.remove('open');
   document.querySelector('.menu-bg').style.display='none';
 }
 
-// =====================================================
-// INIT
-// =====================================================
 auth.onAuthStateChanged(user => {
   if(user){
     currentUser = user;
@@ -3667,10 +2821,6 @@ auth.onAuthStateChanged(user => {
     loadReferStats();
     loadConversionRate();
     startLiveActivityTracking();
-    loadTelegramChannel();
-    
-    // Load Slot Machine
-    loadSlotSettings();
   } else {
     currentUser = null;
     document.getElementById('auth-section').style.display='block';
@@ -3688,7 +2838,7 @@ if(refCode){
 }
 
 initializeDeviceDetection();
-console.log('✅ Take Master Loaded - Game Wallet Withdraw System Added');
+console.log('✅ Take Master Loaded - Coin Conversion System Active');
 </script>
 </body>
 </html>
